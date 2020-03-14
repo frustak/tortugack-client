@@ -1,22 +1,28 @@
 import React, { useState } from 'react';
 import styles from './Modal.module.css';
 import SignIn from './SignIn/SignIn';
-import SignUp from './SignUp/SignUp';
+import Lobby from './Lobby/Lobby';
+import axios from 'axios';
 
 function Modal(props) {
-  const [isSignIn, setIsSignIn] = useState(true);
-  let output = '';
+  const [isLobby, setIsLobby] = useState(false);
 
-  if (isSignIn) {
-    output = (
-      <SignIn
-        signUpClicked={() => setIsSignIn(false)}
-        toggleAlert={props.toggleAlert}
-      />
+  const login = async () => {
+    const response = await axios.post(
+      'https://tortugack.herokuapp.com/api/v1/token',
+      {
+        username: 'frost',
+      }
     );
-  } else {
-    output = <SignUp signInClicked={() => setIsSignIn(true)} />;
-  }
+    alert(response.data);
+    setIsLobby(true);
+  };
+
+  const output = isLobby ? (
+    <Lobby startGame={props.startGame} />
+  ) : (
+    <SignIn login={login} toggleAlert={props.toggleAlert} />
+  );
 
   return <div className={styles.Modal}>{output}</div>;
 }

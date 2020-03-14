@@ -7,8 +7,12 @@ function SignIn(props) {
       <div className={styles.Content}>
         <input placeholder="username" />
         <input placeholder="password" />
-        <button>Sign in</button>
-        <button onClick={props.toggleAlert}>or Sign up</button>
+        <button onClick={props.login}>Sign in</button>
+        <button
+          onClick={() => props.toggleAlert('Gool khordi sabte nam nemikhad XD')}
+        >
+          or Sign up
+        </button>
       </div>
     </div>
   );

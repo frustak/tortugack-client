@@ -6,17 +6,27 @@ import Modal from '../../components/Modal/Modal';
 import Alert from '../../components/UI/Alert/Alert';
 
 function App(props) {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [isAlertShown, setIsAlertShown] = useState(false);
+  const [gameStarted, setGameStarted] = useState(false);
+  const [alertData, setAlertData] = useState({ show: false, message: '' });
 
-  const toggleAlert = () => setIsAlertShown(!isAlertShown);
+  const showAlert = msg => {
+    setAlertData({ show: true, message: msg });
+  };
+
+  const hideAlert = () => {
+    setAlertData({ show: false, message: alertData.message });
+  };
+
+  const startGame = () => {
+    setGameStarted(true);
+  };
 
   return (
     <div className={styles.App}>
       <Map />
       <Cells />
-      {isLoggedIn ? null : <Modal toggleAlert={toggleAlert} />}
-      {isAlertShown ? <Alert /> : null}
+      {gameStarted ? null : <Modal toggleAlert={showAlert} startGame={startGame}/>}
+      <Alert data={alertData} hideAlert={hideAlert} />
     </div>
   );
 }
