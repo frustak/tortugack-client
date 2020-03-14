@@ -38,9 +38,6 @@
   cursor: pointer;
 }
 
-.SignIn .Content button {
-}
-
 .SignIn .Content input::placeholder {
   font-family: monospace;
 }
