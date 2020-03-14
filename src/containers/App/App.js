@@ -4,13 +4,18 @@ import Map from '../../components/Map/Map';
 import Cells from '../../components/Cells/Cells';
 import Modal from '../../components/Modal/Modal';
 import Alert from '../../components/UI/Alert/Alert';
+import Spinner from '../../components/UI/Spinner/Spinner';
 
 function App(props) {
   const [gameStarted, setGameStarted] = useState(false);
   const [alertData, setAlertData] = useState({ show: false, message: '' });
+  const [loading, setLoading] = useState(false);
 
   const showAlert = msg => {
     setAlertData({ show: true, message: msg });
+    setTimeout(() => {
+      setAlertData({ ...alertData, show: false });
+    }, 5000);
   };
 
   const hideAlert = () => {
@@ -25,8 +30,11 @@ function App(props) {
     <div className={styles.App}>
       <Map />
       <Cells />
-      {gameStarted ? null : <Modal toggleAlert={showAlert} startGame={startGame}/>}
+      {gameStarted ? null : (
+        <Modal toggleAlert={showAlert} startGame={startGame} setLoading={setLoading}/>
+      )}
       <Alert data={alertData} hideAlert={hideAlert} />
+      <Spinner loading={loading} />
     </div>
   );
 }
