@@ -11,7 +11,7 @@
   transform: translateX(-50%);
   padding: 8px;
   overflow-y: hidden;
-  transition: 0.5s ease;
+  transition: 0.3s ease;
 }
 
 .Alert p {

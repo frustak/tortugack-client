@@ -7,11 +7,11 @@ import axios from 'axios';
 function Modal(props) {
   const [isLobby, setIsLobby] = useState(false);
 
-  const login = async () => {
+  const login = async username => {
     const response = await axios.post(
       'https://tortugack.herokuapp.com/api/v1/token',
       {
-        username: 'frost',
+        username: username,
       }
     );
     alert(response.data);

@@ -1,13 +1,34 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styles from './SignIn.module.css';
 
 function SignIn(props) {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+
+  const clickHandler = () => {
+    if (!username.trim()) {
+      props.toggleAlert('Username ro vared kon bishoor');
+      return;
+    }
+
+    if (password) {
+      props.toggleAlert('Gool khordi password nemikhad vali mibaramet too :P');
+    }
+    props.login(username);
+  };
+
   return (
     <div className={styles.SignIn}>
       <div className={styles.Content}>
-        <input placeholder="username" />
-        <input placeholder="password" />
-        <button onClick={props.login}>Sign in</button>
+        <input
+          placeholder="username"
+          onChange={event => setUsername(event.target.value)}
+        />
+        <input
+          placeholder="password"
+          onChange={event => setPassword(event.target.value)}
+        />
+        <button onClick={clickHandler}>Sign in</button>
         <button
           onClick={() => props.toggleAlert('Gool khordi sabte nam nemikhad XD')}
         >
