@@ -1,16 +1,24 @@
 .Lobby {
   display: flex;
+  flex-wrap: wrap;
+}
+
+.Lobby .Content {
+  margin: 4px;
+  padding: 4px;
+  display: flex;
   flex-direction: column;
   width: 25%;
   background-color: rgba(0, 0, 0, 0.5);
   color: white;
 }
 
-.Lobby p {
+.Lobby .Content p {
   margin: 0;
 }
 
-.Lobby button {
+.Lobby .Content button {
+  margin-top: 4px;
   border: none;
   outline: none;
   background-color: #673ab7;
@@ -19,6 +27,6 @@
   color: white;
 }
 
-.Lobby button:hover {
+.Lobby .Content button:hover {
   background-color: #311b92;
 }

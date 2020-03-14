@@ -3,7 +3,7 @@ import styles from './Lobby.module.css';
 
 function Lobby(props) {
   const lobbies = props.data.lobbies.map(lobby => (
-    <>
+    <div className={styles.Content}>
       <p>id: {lobby.id}</p>
       <p>size: {lobby.size}</p>
       <p>occupy: {lobby.occupy}</p>
@@ -14,7 +14,7 @@ function Lobby(props) {
         </p>
       ))}
       <button onClick={props.startGame}>start</button>
-    </>
+    </div>
   ));
 
   return <div className={styles.Lobby}>{lobbies}</div>;
