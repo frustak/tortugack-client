@@ -1,10 +1,44 @@
 .Alert {
   position: fixed;
-  bottom: 16px;
+  bottom: 32px;
   display: flex;
   z-index: 10;
-  background-color: #4caf50;
+  background-color: #ffcdd2;
   border-radius: 4px;
+  color: black;
+  justify-content: center;
+  left: 50%;
+  transform: translateX(-50%);
   padding: 8px;
+  overflow-y: hidden;
+  transition: 0.5s ease;
+}
+
+.Alert p {
   text-align: center;
+  margin: 0;
+}
+
+.Closed {
+  transform: translateX(1000px);
+}
+
+.Alert button {
+  border: none;
+  background-color: #f44336;
+  margin: 0;
+  padding: 0;
+  border-radius: 4px;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.1s ease;
+  width: 20px;
+  height: 20px;
+  font-family: monospace;
+  margin-left: 16px;
+  outline: none;
+}
+
+.Alert button:hover {
+  background-color: #b71c1c;
 }
