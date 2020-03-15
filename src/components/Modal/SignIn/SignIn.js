@@ -7,12 +7,15 @@ function SignIn(props) {
 
   const clickHandler = () => {
     if (!username.trim()) {
-      props.toggleAlert('Username ro vared kon bishoor');
+      props.toggleAlert('Username ro vared kon bishoor', 'Warn');
       return;
     }
 
     if (password) {
-      props.toggleAlert('Gool khordi password nemikhad vali mibaramet too :P');
+      props.toggleAlert(
+        'Gool khordi password nemikhad vali mibaramet too :P',
+        'Success'
+      );
     }
     props.login(username);
   };
@@ -30,7 +33,9 @@ function SignIn(props) {
         />
         <button onClick={clickHandler}>Sign in</button>
         <button
-          onClick={() => props.toggleAlert('Gool khordi sabte nam nemikhad XD')}
+          onClick={() =>
+            props.toggleAlert('Gool khordi sabte nam nemikhad XD', 'Info')
+          }
         >
           or Sign up
         </button>
