@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './Alert.module.css';
 
 function Alert(props) {
-  const classes = [styles.Alert];
+  const classes = [styles.Alert, styles[props.data.type]];
   if (!props.data.show) classes.push(styles.Closed);
 
   return (

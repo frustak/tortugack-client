@@ -3,7 +3,6 @@
   bottom: 32px;
   display: flex;
   z-index: 10;
-  background-color: #ffcdd2;
   border-radius: 4px;
   color: black;
   justify-content: center;
@@ -25,7 +24,6 @@
 
 .Alert button {
   border: none;
-  background-color: #f44336;
   margin: 0;
   padding: 0;
   border-radius: 4px;
@@ -39,6 +37,32 @@
   outline: none;
 }
 
-.Alert button:hover {
+.Warn {
+  background-color: #ffcdd2;
+}
+.Warn button {
+  background-color: #f44336;
+}
+.Warn button:hover {
   background-color: #b71c1c;
+}
+
+.Info {
+  background-color: #bbdefb;
+}
+.Info button {
+  background-color: #2196f3;
+}
+.Info button:hover {
+  background-color: #0d47a1;
+}
+
+.Success {
+  background-color: #c8e6c9;
+}
+.Success button {
+  background-color: #4caf50;
+}
+.Success button:hover {
+  background-color: #1b5e20;
 }
