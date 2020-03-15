@@ -17,7 +17,8 @@ function Modal(props) {
         }
       );
       props.toggleAlert('Welcome nigga welcome 😊', 'Success');
-      loadLobby();
+      document.cookie = `token=${response.data.access_token}`;
+      // loadLobby();
     } catch (error) {
       console.error(error);
       props.toggleAlert('Wrong nigga Wrong something went Wrong 😞', 'Warn');
@@ -45,7 +46,7 @@ function Modal(props) {
   ) : (
     <SignIn login={login} toggleAlert={props.toggleAlert} />
   );
-  
+
   return <div className={styles.Modal}>{output}</div>;
 }
 
