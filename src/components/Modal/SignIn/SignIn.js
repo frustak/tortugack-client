@@ -20,12 +20,20 @@ function SignIn(props) {
     props.login(username);
   };
 
+  document.addEventListener('keyup', event => {
+    if (event.keyCode === 13) {
+      event.preventDefault();
+      clickHandler();
+    }
+  });
+
   return (
     <div className={styles.SignIn}>
       <div className={styles.Content}>
         <input
           placeholder="username"
           onChange={event => setUsername(event.target.value)}
+          autoFocus
         />
         <input
           placeholder="password"
