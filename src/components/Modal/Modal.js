@@ -1,46 +1,51 @@
 import React, { useState } from 'react';
 import styles from './Modal.module.css';
 import SignIn from './SignIn/SignIn';
-import Lobby from './Lobby/Lobby';
+import Lobbies from './Lobbies/Lobbies';
 import axios from 'axios';
 
 function Modal(props) {
-  const [lobbyData, setLobbyData] = useState({ show: false, data: null });
+  const [lobbies, setLobbies] = useState({ show: false, data: null });
 
   const login = async username => {
     props.setLoading(true);
-
-    const response = await axios.post(
-      'https://tortugack.herokuapp.com/api/v1/token',
-      {
-        username: username,
-      }
-    );
-
-    if (response.status < 300 && response.status >= 200) {
-      props.toggleAlert('Welcome nigga welcome good ass bitch XD');
-    } else {
-      props.toggleAlert('Wrong nigga Wrong get the fuck outta here');
-      return;
-    }
-
-    const getLobby = async () => {
-      const response = await axios.get(
-        'https://tortugack.herokuapp.com/api/v1/lobby'
+    try {
+      const response = await axios.post(
+        'https://tortugack.herokuapp.com/api/v1/token',
+        {
+          username: username,
+        }
       );
-      return response.data;
-    };
-
-    setLobbyData({ show: true, data: await getLobby() });
+      props.toggleAlert('Welcome nigga welcome 😊', 'Success');
+      loadLobby();
+    } catch (error) {
+      console.error(error);
+      props.toggleAlert('Wrong nigga Wrong something went Wrong 😞', 'Warn');
+    }
     props.setLoading(false);
   };
 
-  const output = lobbyData.show ? (
-    <Lobby data={lobbyData.data} startGame={props.startGame} />
+  const loadLobby = async () => {
+    props.setLoading(true);
+    try {
+      const response = await axios.get(
+        'https://tortugack.herokuapp.com/api/v1/lobby'
+      );
+      setLobbies({ show: true, data: response.data });
+    } catch (error) {
+      console.error(error);
+      props.toggleAlert('Wrong nigga Wrong something went Wrong 😞', 'Warn');
+      return;
+    }
+    props.setLoading(false); // TODO: get out of loading!
+  };
+
+  const output = lobbies.show ? (
+    <Lobbies lobbiesData={lobbies.data} />
   ) : (
     <SignIn login={login} toggleAlert={props.toggleAlert} />
   );
-
+  
   return <div className={styles.Modal}>{output}</div>;
 }
 
