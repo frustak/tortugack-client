@@ -1,0 +1,27 @@
+.Lobby {
+  margin: 4px;
+  padding: 4px;
+  display: flex;
+  flex-direction: column;
+  width: 25%;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+}
+
+.Lobby p {
+  margin: 0;
+}
+
+.Lobby button {
+  margin-top: 4px;
+  border: none;
+  outline: none;
+  background-color: #673ab7;
+  transition: 0.3s ease;
+  cursor: pointer;
+  color: white;
+}
+
+.Lobby button:hover {
+  background-color: #311b92;
+}
