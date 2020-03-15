@@ -11,11 +11,8 @@ function App(props) {
   const [alertData, setAlertData] = useState({ show: false, message: '' });
   const [loading, setLoading] = useState(false);
 
-  const showAlert = msg => {
-    setAlertData({ show: true, message: msg });
-    setTimeout(() => {
-      setAlertData({ ...alertData, show: false });
-    }, 5000);
+  const showAlert = (msg, type) => {
+    setAlertData({ show: true, message: msg, type: type });
   };
 
   const hideAlert = () => {
@@ -31,7 +28,11 @@ function App(props) {
       <Map />
       <Cells />
       {gameStarted ? null : (
-        <Modal toggleAlert={showAlert} startGame={startGame} setLoading={setLoading}/>
+        <Modal
+          toggleAlert={showAlert}
+          startGame={startGame}
+          setLoading={setLoading}
+        />
       )}
       <Alert data={alertData} hideAlert={hideAlert} />
       <Spinner loading={loading} />
