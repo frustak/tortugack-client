@@ -20,12 +20,9 @@ function SignIn(props) {
     props.login(username);
   };
 
-  document.addEventListener('keyup', event => {
-    if (event.keyCode === 13) {
-      event.preventDefault();
-      clickHandler();
-    }
-  });
+  const enterKeyPress = event => {
+    if (event.key === 'Enter') clickHandler();
+  };
 
   return (
     <div className={styles.SignIn}>
@@ -33,11 +30,13 @@ function SignIn(props) {
         <input
           placeholder="username"
           onChange={event => setUsername(event.target.value)}
+          onKeyDown={enterKeyPress}
           autoFocus
         />
         <input
           placeholder="password"
           onChange={event => setPassword(event.target.value)}
+          onKeyDown={enterKeyPress}
         />
         <button onClick={clickHandler}>Sign in</button>
         <button
