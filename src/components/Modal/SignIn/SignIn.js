@@ -2,26 +2,8 @@ import React, { useState } from 'react';
 import styles from './SignIn.module.css';
 
 function SignIn(props) {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-
-  const clickHandler = () => {
-    if (!username.trim()) {
-      props.toggleAlert('Username ro vared kon bishoor', 'Warn');
-      return;
-    }
-
-    if (password) {
-      props.toggleAlert(
-        'Gool khordi password nemikhad vali mibaramet too :P',
-        'Success'
-      );
-    }
-    props.login(username);
-  };
-
   const enterKeyPress = event => {
-    if (event.key === 'Enter') clickHandler();
+    if (event.key === 'Enter') props.clickHandler();
   };
 
   return (
@@ -29,16 +11,16 @@ function SignIn(props) {
       <div className={styles.Content}>
         <input
           placeholder="username"
-          onChange={event => setUsername(event.target.value)}
+          onChange={event => props.setUsername(event.target.value)}
           onKeyDown={enterKeyPress}
           autoFocus
         />
         <input
           placeholder="password"
-          onChange={event => setPassword(event.target.value)}
+          onChange={event => props.setPassword(event.target.value)}
           onKeyDown={enterKeyPress}
         />
-        <button onClick={clickHandler}>Sign in</button>
+        <button onClick={props.clickHandler}>Sign in</button>
         <button
           onClick={() =>
             props.toggleAlert('Gool khordi sabte nam nemikhad XD', 'Info')
