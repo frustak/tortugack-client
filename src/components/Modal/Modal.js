@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import styles from './Modal.module.css';
 import SignIn from './SignIn/SignIn';
-import Lobbies from './Lobbies/Lobbies';
+import MainMenu from './MainMenu/MainMenu';
 import axios from '../../services/axios';
 
 function Modal(props) {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
   const [lobbies, setLobbies] = useState({ show: false, data: null });
 
   const login = async username => {
@@ -36,10 +38,44 @@ function Modal(props) {
     props.setLoading(false); // TODO: get out of loading!
   };
 
+  const loginClickHandler = () => {
+    if (!username.trim()) {
+      props.toggleAlert('Username ro vared kon bishoor', 'Warn');
+      return;
+    }
+
+    if (password) {
+      props.toggleAlert(
+        'Gool khordi password nemikhad vali mibaramet too :P',
+        'Success'
+      );
+    }
+    login(username);
+  };
+
+  const createLobby = async () => {
+    const response = await axios.post('/lobby');
+  };
+
+  const logout = () => {
+    setLobbies({ ...lobbies, show: false });
+    props.toggleAlert('Signed out!', 'Success');
+  };
+
   const output = lobbies.show ? (
-    <Lobbies lobbiesData={lobbies.data} />
+    <MainMenu
+      username={username}
+      lobbiesData={lobbies.data}
+      logout={logout}
+      createLobby={createLobby}
+    />
   ) : (
-    <SignIn login={login} toggleAlert={props.toggleAlert} />
+    <SignIn
+      setUsername={setUsername}
+      setPassword={setPassword}
+      clickHandler={loginClickHandler}
+      toggleAlert={props.toggleAlert}
+    />
   );
 
   return <div className={styles.Modal}>{output}</div>;
