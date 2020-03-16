@@ -1,0 +1,31 @@
+.MainMenu {
+  display: flex;
+  flex-direction: column;
+}
+
+.MainMenu .Welcome {
+  background-color: #eeeeee;
+  border-radius: 4px;
+  padding: 4px;
+  margin: 4px;
+  width: 24%;
+  text-align: center;
+}
+
+.MainMenu button {
+  border: none;
+  background-color: #222222;
+  color: #eeeeee;
+  margin: 4px;
+  padding: 4px;
+  border-radius: 4px;
+  transition: 0.1s ease;
+  width: 24%;
+  cursor: pointer;
+  outline: none;
+}
+
+.MainMenu button:hover {
+  background-color: #eeeeee;
+  color: #222222;
+}
