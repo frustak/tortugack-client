@@ -8,7 +8,7 @@ const token = document.cookie.replace(
 const instance = axios.create({
   baseURL: 'https://tortugack.herokuapp.com/api/v1',
   headers: {
-    Authorization: `Basic ${token}`,
+    Authorization: `Bearer ${token}`,
   },
 });
 
