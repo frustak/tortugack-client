@@ -7,10 +7,10 @@
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
     "axios": "^0.19.2",
+    "jwt-decode": "^2.2.0",
     "react": "^16.13.0",
     "react-dom": "^16.13.0",
-    "react-scripts": "3.4.0",
-    "react-spinners": "^0.8.1"
+    "react-scripts": "3.4.0"
   },
   "scripts": {
     "start": "react-scripts start",
