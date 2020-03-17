@@ -59,6 +59,7 @@ function Modal(props) {
 
   const logout = () => {
     setLobbies({ ...lobbies, show: false });
+    document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
     props.toggleAlert('Signed out!', 'Success');
   };
 
