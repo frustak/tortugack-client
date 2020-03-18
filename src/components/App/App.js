@@ -28,6 +28,8 @@ class App extends Component {
     gameData: null,
   };
 
+  pollTime = 10000;
+
   verifyUser = async () => {
     const token = getToken();
     const response = await this.axios.post('/token/verify', { token });
@@ -117,7 +119,6 @@ class App extends Component {
     const lobbyID = this.state.lobbyData.id;
     const data = { lobby_id: lobbyID };
     const response = await this.axios.post('/lobby/start', data);
-    this.setState({ route: ROUTES.GAME });
     this.endLobbyPolling();
     this.startGamePolling();
   };
@@ -127,19 +128,22 @@ class App extends Component {
       const response = await this.axios.get('/lobby/my-lobby');
       const data = response.data.lobby;
       this.setState({ lobbyData: data });
-    }, 7000);
+    }, this.pollTime);
   };
 
   endLobbyPolling = () => {
     clearInterval(this.pollTimer);
   };
 
-  startGamePolling = () => {
-    this.pollTimer = setInterval(async () => {
+  startGamePolling = async () => {
+    const request = async () => {
       const response = await this.axios.get('/game/my-game');
       const data = response.data.game_status;
       this.setState({ gameData: data });
-    }, 7000);
+    };
+    await request();
+    this.setState({ route: ROUTES.GAME });
+    this.pollTimer = setInterval(request, this.pollTime);
   };
 
   endGamePolling = () => {
