@@ -128,6 +128,10 @@ class App extends Component {
       const response = await this.axios.get('/lobby/my-lobby');
       const data = response.data.lobby;
       this.setState({ lobbyData: data });
+      if (data.game_started) {
+        this.endLobbyPolling();
+        this.startGamePolling();
+      }
     }, this.pollTime);
   };
 
