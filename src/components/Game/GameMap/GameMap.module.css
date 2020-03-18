@@ -1,0 +1,89 @@
+.row {
+  display: flex;
+}
+
+.cell {
+  display: flex;
+  width: 40px;
+  height: 40px;
+  border: 1px solid white;
+  justify-content: center;
+  align-items: center;
+}
+
+.sea {
+  background-color: lightblue;
+}
+
+.land {
+  background-color: sandybrown;
+}
+
+.ship {
+  background-color: saddlebrown;
+}
+
+.chest-holder {
+  background-color: peru;
+}
+
+.place {
+  width: 37px;
+  height: 37px;
+  background-color: rgba(0, 0, 0, 0.25);
+  border-radius: 100%;
+}
+
+.chestPlace {
+  width: 30px;
+  height: 30px;
+  background-color: rgba(0, 0, 0, 0.25);
+}
+
+.chest {
+  width: 20px;
+  height: 20px;
+  background-color: goldenrod;
+}
+
+.player {
+  border-radius: 100%;
+  width: 20px;
+  height: 20px;
+}
+
+.player-1 {
+  background-color: white;
+}
+
+.player-2 {
+  background-color: blue;
+}
+
+.player-3 {
+  background-color: orange;
+}
+
+.player-4 {
+  background-color: grey;
+}
+
+.player-5 {
+  background-color: green;
+}
+
+.player-6 {
+  background-color: black;
+}
+
+.player-7 {
+  background-color: yellow;
+}
+
+.player-8 {
+  background-color: red;
+}
+
+.player-9 {
+  background-color: purple;
+}
