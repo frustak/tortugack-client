@@ -88,7 +88,7 @@ class App extends Component {
     try {
       response = await this.axios.patch('/lobby/join', data);
     } catch (error) {
-      alert(error);
+      alert('nagard nist gashtam nabod :(');
       return;
     }
 
