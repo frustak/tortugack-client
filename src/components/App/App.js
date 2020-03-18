@@ -25,6 +25,7 @@ class App extends Component {
     username: null,
     lobbies: [],
     lobbyData: null,
+    gameData: null,
   };
 
   verifyUser = async () => {
@@ -116,6 +117,9 @@ class App extends Component {
     const lobbyID = this.state.lobbyData.id;
     const data = { lobby_id: lobbyID };
     const response = await this.axios.post('/lobby/start', data);
+    this.setState({ route: ROUTES.GAME });
+    this.endLobbyPolling();
+    this.startGamePolling();
   };
 
   startLobbyPolling = () => {
@@ -127,6 +131,18 @@ class App extends Component {
   };
 
   endLobbyPolling = () => {
+    clearInterval(this.pollTimer);
+  };
+
+  startGamePolling = () => {
+    this.pollTimer = setInterval(async () => {
+      const response = await this.axios.get('/game/my-game');
+      const data = response.data.game_status;
+      this.setState({ gameData: data });
+    }, 7000);
+  };
+
+  endGamePolling = () => {
     clearInterval(this.pollTimer);
   };
 
@@ -171,6 +187,7 @@ class App extends Component {
       case ROUTES.FULL_LOBBY:
         output = (
           <FullLobby
+            username={this.state.username}
             data={this.state.lobbyData}
             leave={this.leaveLobby}
             start={this.startGame}
@@ -178,7 +195,7 @@ class App extends Component {
         );
         break;
       case ROUTES.GAME:
-        output = <Game />;
+        output = <Game data={this.state.gameData} />;
         break;
       default:
         output = <p>root</p>; // FIXME: maybe something else? or change root name?
