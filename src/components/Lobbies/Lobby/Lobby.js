@@ -14,8 +14,7 @@ function Lobby(props) {
       <p>size: {data.size}</p>
       <p>occupy: {data.occupy}</p>
       <p>host: {data.host.username}</p>
-      <p>game started: {data.game_started}</p>
-      <p>players: </p>
+      <p>game started: {data.game_started.toString()}</p>
       {players}
     </>
   );
