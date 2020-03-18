@@ -60,11 +60,12 @@ class App extends Component {
   };
 
   createLobby = async () => {
-    const response = await this.axios.post('/lobby');
+    await this.axios.post('/lobby');
+    const response = this.axios.get('/lobby/my-lobby');
 
     this.setState({
       route: ROUTES.FULL_LOBBY,
-      lobbyData: response.data.lobby,
+      lobbyData: response.data,
     });
 
     this.startLobbyPolling();
@@ -90,20 +91,20 @@ class App extends Component {
     try {
       response = await this.axios.patch('/lobby/join', data);
     } catch (error) {
-      alert('nagard nist gashtam nabod :(');
+      alert('gashtam nabod nagard nist :(');
       return;
     }
 
     this.setState({
       route: ROUTES.FULL_LOBBY,
-      lobbyData: response.data.lobby,
+      lobbyData: response.data,
     });
 
     this.startLobbyPolling();
   };
 
   leaveLobby = async () => {
-    const lobbyID = this.state.lobbyData.id;
+    const lobbyID = this.state.lobbyData.lobby.id;
     const data = { lobby_id: lobbyID };
     const response = await this.axios.put('/lobby/leave', data);
 
@@ -116,7 +117,7 @@ class App extends Component {
   };
 
   startGame = async () => {
-    const lobbyID = this.state.lobbyData.id;
+    const lobbyID = this.state.lobbyData.lobby.id;
     const data = { lobby_id: lobbyID };
     const response = await this.axios.post('/lobby/start', data);
     this.endLobbyPolling();
@@ -126,7 +127,7 @@ class App extends Component {
   startLobbyPolling = () => {
     this.pollTimer = setInterval(async () => {
       const response = await this.axios.get('/lobby/my-lobby');
-      const data = response.data.lobby;
+      const data = response.data;
       this.setState({ lobbyData: data });
       if (data.game_started) {
         this.endLobbyPolling();
