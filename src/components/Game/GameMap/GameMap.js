@@ -43,16 +43,17 @@ const cells = {
 function GameMap(props) {
   const output = [];
 
+  let i = 1;
   _.forIn(props.data.players_position, (value, key) => {
     const [land, place] = value.split('_');
     const position = cells[land][place];
-    output.push(<Cell player={key} position={position} key={key} color />);
+    output.push(<Cell player={key} position={position} key={key} color={i} />);
+    i++;
   });
 
   _.forIn(props.data.chests_position, (value, key) => {
     const [land, place] = key.split('_');
     let position = cells[land][place];
-    if (key === 'sg') position = cells.sg.nt; // FIXME: server-side naming :(
     output.push(
       <Cell player={value} position={position} key={key} color="chest" />
     );
@@ -67,29 +68,3 @@ function GameMap(props) {
 }
 
 export default GameMap;
-
-const t = {
-  game_status: {
-    players_position: { frostacktack: 'jr_1' },
-    chests_position: {
-      fd_fr: 0,
-      fd_en: 0,
-      sg: 4,
-      jr_fr: 0,
-      jr_en: 0,
-      tr_fr: 1,
-      tr_en: 1,
-    },
-    player_game_info: {
-      team: 'france',
-      vote_cards: null,
-      event_cards: null,
-      role: null,
-    },
-    last_action: null,
-    is_over: false,
-    turn: { username: 'frostacktack' },
-    winner: null,
-  },
-  has_game: true,
-};
