@@ -8,6 +8,7 @@ import Game from '../Game/Game';
 import { setToken, getToken, deleteToken } from '../../helpers/cookie-helper';
 import createAxios from '../../services/axios';
 import jwtDecode from 'jwt-decode';
+import Loading from '../Loading/Loading';
 
 const ROUTES = {
   ROOT: '/',
@@ -230,7 +231,12 @@ class App extends Component {
         output = <p>root</p>; // FIXME: maybe something else? or change root name?
     }
 
-    return <>{this.state.loading ? <p>loading...</p> : output}</>;
+    return (
+      <>
+        <Loading show={this.state.loading} />
+        {output}
+      </>
+    );
   };
 }
 
