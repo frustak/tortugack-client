@@ -10,3 +10,4 @@ function GameInfo(props) {
 }
 
 export default GameInfo;
+
