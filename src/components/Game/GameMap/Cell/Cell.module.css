@@ -1,9 +1,8 @@
 .Cell {
   position: fixed;
-  width: 36px;
-  height: 36px;
+  width: 32px;
+  height: 32px;
   border-radius: 100%;
-  background-color: red;
 }
 
 .Player_1 {
@@ -40,4 +39,9 @@
 
 .Player_9 {
   background-color: white;
+}
+
+.Chest {
+  background-color: sienna;
+  border-radius: 0;
 }
