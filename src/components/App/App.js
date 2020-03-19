@@ -28,7 +28,7 @@ class App extends Component {
     gameData: null,
   };
 
-  pollTime = 10000;
+  pollTime = 5000;
 
   checkUserState = async () => {
     const lobbyResponse = await this.axios.get('/lobby/my-lobby');
