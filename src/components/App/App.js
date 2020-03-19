@@ -126,7 +126,7 @@ class App extends Component {
   leaveLobby = async () => {
     const lobbyID = this.state.lobbyData.lobby.id;
     const data = { lobby_id: lobbyID };
-    const response = await this.axios.put('/lobby/leave', data);
+    await this.axios.put('/lobby/leave', data);
 
     this.setState({
       route: ROUTES.MAIN_MENU,
@@ -139,7 +139,7 @@ class App extends Component {
   startGame = async () => {
     const lobbyID = this.state.lobbyData.lobby.id;
     const data = { lobby_id: lobbyID };
-    const response = await this.axios.post('/lobby/start', data);
+    await this.axios.post('/lobby/start', data);
     this.endLobbyPolling();
     this.startGamePolling();
   };
