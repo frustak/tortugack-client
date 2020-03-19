@@ -30,6 +30,24 @@ class App extends Component {
 
   pollTime = 10000;
 
+  checkUserState = async () => {
+    const lobbyResponse = await this.axios.get('/lobby/my-lobby');
+    if (lobbyResponse.data.has_lobby) {
+      this.setState({
+        route: ROUTES.FULL_LOBBY,
+        lobbyData: lobbyResponse.data,
+      });
+      this.startLobbyPolling();
+      return;
+    }
+
+    const gameResponse = await this.axios.get('/game/my-game');
+    if (gameResponse.data.has_game) {
+      this.startGamePolling();
+      return;
+    }
+  };
+
   verifyUser = async () => {
     const token = getToken();
     const response = await this.axios.post('/token/verify', { token });
@@ -37,6 +55,7 @@ class App extends Component {
       this.setState({ route: ROUTES.MAIN_MENU });
       const username = jwtDecode(token).username;
       this.setState({ username });
+      this.checkUserState();
     } else {
       this.setState({ route: ROUTES.SIGN_IN });
     }
@@ -52,6 +71,7 @@ class App extends Component {
 
     setToken(response.data.access_token);
     this.setState({ route: ROUTES.MAIN_MENU });
+    this.checkUserState();
   };
 
   logout = () => {
@@ -61,7 +81,7 @@ class App extends Component {
 
   createLobby = async () => {
     await this.axios.post('/lobby');
-    const response = this.axios.get('/lobby/my-lobby');
+    const response = await this.axios.get('/lobby/my-lobby');
 
     this.setState({
       route: ROUTES.FULL_LOBBY,
@@ -129,7 +149,7 @@ class App extends Component {
       const response = await this.axios.get('/lobby/my-lobby');
       const data = response.data;
       this.setState({ lobbyData: data });
-      if (data.game_started) {
+      if (data.lobby.game_started) {
         this.endLobbyPolling();
         this.startGamePolling();
       }
