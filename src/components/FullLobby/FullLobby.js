@@ -3,7 +3,7 @@ import Lobby from '../Lobbies/Lobby/Lobby';
 
 function FullLobby(props) {
   let output = null;
-  if (props.data.can_start) {
+  if (props.data.canStart) {
     output = <button onClick={props.start}>start</button>;
   }
 
