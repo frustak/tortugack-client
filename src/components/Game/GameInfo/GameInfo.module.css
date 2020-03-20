@@ -1,3 +1,8 @@
+.GameInfo {
+  display: flex;
+  flex-direction: column;
+}
+
 .Player_1 {
   color: blue;
 }
