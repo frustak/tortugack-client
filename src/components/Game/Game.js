@@ -7,7 +7,8 @@ function Game(props) {
     <>
       <GameMap data={props.data} />
       <GameInfo data={props.data} />
-    </>
+      <GameAction />
+    </div>
   );
 }
 
