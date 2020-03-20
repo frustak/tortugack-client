@@ -228,7 +228,7 @@ class App extends Component {
         output = <Game data={this.state.gameData} />;
         break;
       default:
-        output = <p>root</p>; // FIXME: maybe something else? or change root name?
+        output = <p>ERROR!</p>; // FIXME: maybe something else? or change root name?
     }
 
     return (
