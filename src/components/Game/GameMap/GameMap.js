@@ -44,7 +44,7 @@ function GameMap(props) {
   const output = [];
 
   let i = 1;
-  _.forIn(props.data.players_position, (value, key) => {
+  _.forIn(props.data.playersPosition, (value, key) => {
     const [land, place] = value.split('_');
     const position = cells[land][place];
     output.push(
@@ -53,7 +53,7 @@ function GameMap(props) {
     i++;
   });
 
-  _.forIn(props.data.chests_position, (value, key) => {
+  _.forIn(props.data.chestsPosition, (value, key) => {
     const [land, place] = key.split('_');
     let position = cells[land][place];
     output.push(
