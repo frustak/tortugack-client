@@ -16,6 +16,7 @@ function Lobby(props) {
       <p>host: {data.host.username}</p>
       <p>game started: {data.gameStarted.toString()}</p>
       {players}
+      <hr />
     </>
   );
 }
