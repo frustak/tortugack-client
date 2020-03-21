@@ -164,7 +164,7 @@ class App extends Component {
   startGamePolling = async () => {
     const request = async () => {
       const response = await this.axios.get('/game/my-game');
-      const data = response.data.gameStatus;
+      const data = response.data;
       this.setState({ gameData: data });
     };
     await request();
@@ -174,6 +174,17 @@ class App extends Component {
 
   endGamePolling = () => {
     clearInterval(this.pollTimer);
+  };
+
+  sendAction = async (actionType, payload) => {
+    const data = {
+      gameId: this.state.gameData.gameId,
+      action: {
+        actionType,
+      },
+      payload,
+    };
+    await this.axios.post('/game/action', data);
   };
 
   componentDidMount = () => {
@@ -225,16 +236,22 @@ class App extends Component {
         );
         break;
       case ROUTES.GAME:
-        output = <Game data={this.state.gameData} />;
+        output = (
+          <Game
+            data={this.state.gameData}
+            username={this.state.username}
+            sendAction={this.sendAction}
+          />
+        );
         break;
       default:
-        output = <p></p>; // FIXME: maybe something else? or change root name?
+        output = <></>;
     }
 
     return (
       <>
-        <Loading show={this.state.loading} />
         {output}
+        <Loading show={this.state.loading} />
       </>
     );
   };
