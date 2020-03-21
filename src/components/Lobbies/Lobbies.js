@@ -3,10 +3,7 @@ import Lobby from './Lobby/Lobby';
 
 function Lobbies(props) {
   const lobbies = props.lobbies.map(lobby => (
-    <>
-      <Lobby data={lobby} key={lobby.id} />
-      <hr />
-    </>
+    <Lobby data={lobby} key={lobby.id} />
   ));
 
   return (
