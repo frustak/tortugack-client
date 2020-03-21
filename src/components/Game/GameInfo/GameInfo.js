@@ -4,24 +4,33 @@ import styles from './GameInfo.module.css';
 
 function GameInfo(props) {
   let hostColor;
+  let userColor;
 
   const players = _.keys(props.data.playersPosition).map((player, index) => {
     const style = styles[`Player_${index + 1}`];
+    let output = player;
     if (props.data.turn.username === player) {
       hostColor = style;
-      return (
-        <p className={style}>
-          <strong>{player}</strong>
-        </p>
-      );
+      output = <strong>{player}</strong>;
     }
-    return <p className={style}>{player}</p>;
+    if (props.username === player) userColor = style;
+    return (
+      <p className={style} key={index}>
+        {output}
+      </p>
+    );
   });
 
   return (
     <div className={styles.GameInfo}>
-      <p className={hostColor}>turn: {props.data.turn.username}</p>
-      <p>team: {props.data.playerGameInfo.team}</p>
+      <p>
+        your name: <span className={userColor}>{props.username}</span>
+      </p>
+      <p>your team: {props.data.playerGameInfo.team}</p>
+      <p>your role: {props.data.playerGameInfo.role}</p>
+      <p>
+        turn: <span className={hostColor}>{props.data.turn.username}</span>
+      </p>
       <p>players: </p>
       {players}
     </div>
