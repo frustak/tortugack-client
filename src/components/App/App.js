@@ -161,15 +161,16 @@ class App extends Component {
     clearInterval(this.pollTimer);
   };
 
+  reloadGame = async () => {
+    const response = await this.axios.get('/game/my-game');
+    const data = response.data;
+    this.setState({ gameData: data });
+  };
+
   startGamePolling = async () => {
-    const request = async () => {
-      const response = await this.axios.get('/game/my-game');
-      const data = response.data;
-      this.setState({ gameData: data });
-    };
-    await request();
+    await this.reloadGame();
     this.setState({ route: ROUTES.GAME });
-    this.pollTimer = setInterval(request, this.pollTime);
+    this.pollTimer = setInterval(this.reloadGame, this.pollTime);
   };
 
   endGamePolling = () => {
@@ -185,6 +186,7 @@ class App extends Component {
       payload,
     };
     await this.axios.post('/game/action', data);
+    this.reloadGame();
   };
 
   componentDidMount = () => {
