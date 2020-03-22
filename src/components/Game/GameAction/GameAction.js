@@ -29,11 +29,17 @@ function GameAction(props) {
     props.sendAction('put chest', payload);
   };
 
+  const maroonCrew = () => {
+    const crew = prompt('who do you want to maroon?');
+    props.sendAction('maroon any crew mate to tortuga', { crewToMaroon: crew });
+  };
+
   if (props.data.turn.username === props.username) {
     output = props.data.playerGameInfo.availableActions.map((action, index) => {
       let click = () => props.sendAction(action);
       if (action === 'vote') click = vote;
       if (action === 'put chest') click = putChest;
+      if (action === 'maroon any crew mate to tortuga') click = maroonCrew;
 
       return (
         <button onClick={click} key={index}>
