@@ -4,7 +4,7 @@ import styles from './VoteCards.module.css';
 function VoteCards(props) {
   const cards = props.data.playerGameInfo.voteCards.map((card, index) => {
     return (
-      <>
+      <div className={styles.VoteCard}>
         <p>vote card number: {index + 1}</p>
         <p>cannon: {card.cannon}</p>
         <p>fire: {card.fire}</p>
@@ -12,7 +12,7 @@ function VoteCards(props) {
         <p>britain: {card.britain}</p>
         <p>skull: {card.skull}</p>
         <p>wheel: {card.wheel}</p>
-      </>
+      </div>
     );
   });
 

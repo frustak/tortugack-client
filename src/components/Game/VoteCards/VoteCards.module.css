@@ -1,4 +1,9 @@
 .VoteCards {
+  display: flex;
+  flex-direction: column;
+}
+
+.VoteCard {
   background-color: lightcoral;
   border: 2px solid lightgreen;
 }
