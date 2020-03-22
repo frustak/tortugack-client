@@ -108,13 +108,7 @@ class App extends Component {
     const lobbyID = prompt('enter lobby id');
     const data = { lobbyId: lobbyID };
     let response;
-
-    try {
-      response = await this.axios.patch('/lobby/join', data);
-    } catch (error) {
-      alert('Error :(');
-      return;
-    }
+    response = await this.axios.patch('/lobby/join', data);
 
     this.setState({
       route: ROUTES.FULL_LOBBY,
