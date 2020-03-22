@@ -2,8 +2,6 @@ import React from 'react';
 import styles from './GameAction.module.css';
 
 function GameAction(props) {
-  let output = null;
-
   const vote = () => {
     const voteIndex = prompt('gimme vote');
     const payload = { voteCardIndex: +voteIndex };
@@ -23,29 +21,63 @@ function GameAction(props) {
         'which side you want to steal a chest? 1) BRITAIN, 2) FRANCE'
       );
     }
-    payload.whichTeam = prompt(
+    const choice = prompt(
       'which side you want to put the chest? 1) BRITAIN, 2) FRANCE'
     );
+    if (choice === '1') payload.whichTeam = 'BRITAIN';
+    if (choice === '2') payload.whichTeam = 'FRANCE';
     props.sendAction('put chest', payload);
   };
 
   const maroonCrew = () => {
-    const crew = prompt('who do you want to maroon?');
-    props.sendAction('maroon any crew mate to tortuga', { crewToMaroon: crew });
+    const crewToMaroon = prompt('who do you want to maroon?');
+    props.sendAction('maroon any crew mate to tortuga', { crewToMaroon });
   };
 
-  output = props.data.playerGameInfo.availableActions.map((action, index) => {
-    let click = () => props.sendAction(action);
-    if (action === 'vote') click = vote;
-    if (action === 'put chest') click = putChest;
-    if (action === 'maroon any crew mate to tortuga') click = maroonCrew;
+  const move = () => {
+    let moveWhere;
+    const position = props.data.playersPosition[props.username];
+    if (position.startsWith('jr')) moveWhere = 'jr_b';
+    if (position.startsWith('fd')) moveWhere = 'fd_b';
+    if (position.startsWith('tr')) {
+      const input = prompt(
+        'where you wanna go? 1) jolly roger boat, 2) flying dutchman boat'
+      );
+      if (input === '1') moveWhere = 'jr_b';
+      if (input === '2') moveWhere = 'fd_b';
+    }
+    if (position === 'jr_b') {
+      const input = prompt(
+        'where you wanna go? 1) tortuga island, 2) jolly roger ship'
+      );
+      if (input === '1') moveWhere = 'tr';
+      if (input === '2') moveWhere = 'jr';
+    }
+    if (position === 'fd_b') {
+      const input = prompt(
+        'where you wanna go? 1) tortuga island, 2) flying dutchman ship'
+      );
+      if (input === '1') moveWhere = 'tr';
+      if (input === '2') moveWhere = 'fd';
+    }
+    props.sendAction('move', { moveWhere });
+  };
 
-    return (
-      <button onClick={click} key={index}>
-        {action}
-      </button>
-    );
-  });
+  const output = props.data.playerGameInfo.availableActions.map(
+    (action, index) => {
+      let click = () => props.sendAction(action);
+      if (action === 'vote') click = vote;
+      if (action === 'put chest') click = putChest;
+      if (action === 'maroon any crew mate to tortuga') click = maroonCrew;
+      if (action === 'move') click = move;
+
+      return (
+        <button onClick={click} key={index}>
+          {action}
+        </button>
+      );
+    }
+  );
 
   return <div className={styles.GameAction}>{output}</div>;
 }
