@@ -4,26 +4,45 @@ import styles from './GameAction.module.css';
 function GameAction(props) {
   let output = null;
 
-  if (props.data.turn.username === props.username) {
-    output = props.data.playerGameInfo.availableActions.map((action, index) => (
-      <button onClick={() => props.sendAction(action)} key={index}>
-        {action}
-      </button>
-    ));
-  }
-
   const vote = () => {
     const voteIndex = prompt('gimme vote');
-    const action = 'vote';
     const payload = { voteCardIndex: +voteIndex };
-    props.sendAction(action, payload);
+    props.sendAction('vote', payload);
   };
 
-  const canVote = props.data.lastAction?.actionData.participatingPlayers.some(
-    player => props.username === player
-  );
+  const putChest = () => {
+    const lastAction = props.data.lastAction;
+    const payload = {};
+    if (
+      lastAction?.actionType === 'call for an attack' &&
+      lastAction?.actionData.whichCaptain.username === props.username &&
+      lastAction?.actionData.state === 'success' &&
+      lastAction?.actionData.fromOtherShip
+    ) {
+      payload.fromWhichTeam = prompt(
+        'which side you want to steal a chest? 1) BRITAIN, 2) FRANCE'
+      );
+    }
+    payload.whichTeam = prompt(
+      'which side you want to put the chest? 1) BRITAIN, 2) FRANCE'
+    );
+    props.sendAction('put chest', payload);
+  };
 
-  if (canVote) output = <button onClick={vote}>vote</button>;
+  if (props.data.turn.username === props.username) {
+    output = props.data.playerGameInfo.availableActions.map((action, index) => {
+      let click = () => props.sendAction(action);
+      if (action === 'vote') click = vote;
+      if (action === 'put chest') click = putChest;
+
+      return (
+        <button onClick={click} key={index}>
+          {action}
+        </button>
+      );
+    });
+  }
+
   return <div className={styles.GameAction}>{output}</div>;
 }
 
