@@ -63,6 +63,16 @@ function GameAction(props) {
     props.sendAction('move', { moveWhere });
   };
 
+  const stealChest = () => {
+    const choice = prompt(
+      'which team you want to steal from? 1) britain, 2) france'
+    );
+    let fromHold;
+    if (choice === '1') fromHold = 'BRITAIN';
+    if (choice === '2') fromHold = 'FRANCE';
+    props.sendAction('move treasure', { fromHold });
+  };
+
   const output = props.data.playerGameInfo.availableActions.map(
     (action, index) => {
       let click = () => props.sendAction(action);
@@ -70,6 +80,7 @@ function GameAction(props) {
       if (action === 'put chest') click = putChest;
       if (action === 'maroon any crew mate to tortuga') click = maroonCrew;
       if (action === 'move') click = move;
+      if (action === 'move treasure') click = stealChest;
 
       return (
         <button onClick={click} key={index}>
