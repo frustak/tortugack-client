@@ -1,17 +1,22 @@
 import React from 'react';
 import styles from './VoteCards.module.css';
+import _ from 'lodash';
 
 function VoteCards(props) {
   const cards = props.data.playerGameInfo.voteCards.map((card, index) => {
+    const details = [];
+    _.forIn(card, (value, key) =>
+      details.push(
+        <p>
+          {key}: {value}
+        </p>
+      )
+    );
+
     return (
       <div className={styles.VoteCard}>
         <p>vote card number: {index + 1}</p>
-        <p>cannon: {card.cannon}</p>
-        <p>fire: {card.fire}</p>
-        <p>water: {card.water}</p>
-        <p>britain: {card.britain}</p>
-        <p>skull: {card.skull}</p>
-        <p>wheel: {card.wheel}</p>
+        {details}
       </div>
     );
   });
