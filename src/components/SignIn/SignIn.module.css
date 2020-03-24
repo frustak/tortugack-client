@@ -1,0 +1,11 @@
+.SignIn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.SignIn .Content {
+  display: flex;
+  flex-direction: column;
+}
