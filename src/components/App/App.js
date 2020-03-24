@@ -4,11 +4,13 @@ import MainMenu from '../MainMenu/MainMenu';
 import Lobbies from '../Lobbies/Lobbies';
 import FullLobby from '../FullLobby/FullLobby';
 import Game from '../Game/Game';
+import Loading from '../Loading/Loading';
+
+import withCssBaseline from '../../hoc/with-css-baseline';
 
 import { setToken, getToken, deleteToken } from '../../helpers/cookie-helper';
 import createAxios from '../../services/axios';
 import jwtDecode from 'jwt-decode';
-import Loading from '../Loading/Loading';
 
 const ROUTES = {
   ROOT: '/',
@@ -253,4 +255,4 @@ class App extends Component {
   };
 }
 
-export default App;
+export default withCssBaseline(App);
