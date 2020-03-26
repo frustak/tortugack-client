@@ -1,5 +1,4 @@
-html,
-body,
-#root {
-  height: 100%;
+*::selection {
+  background-color: #e91e63;
+  color: white;
 }
