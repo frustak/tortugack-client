@@ -15,7 +15,7 @@ const createAxios = (startFunc, endFunc, errFunc) => {
     },
     error => {
       endFunc();
-      errFunc();
+      errFunc(error?.response?.data?.detail);
       return Promise.reject(error);
     }
   );
@@ -27,7 +27,7 @@ const createAxios = (startFunc, endFunc, errFunc) => {
     },
     error => {
       endFunc();
-      errFunc();
+      errFunc(error?.response?.data?.detail);
       return Promise.reject(error);
     }
   );
