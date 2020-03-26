@@ -46,8 +46,12 @@
   color: #111111;
 }
 
+.Image {
+  width: 30px;
+  height: 30px;
+}
+
 .Chest {
-  background-color: #cd8500;
-  border-radius: 4px;
   color: white;
+  font-size: x-small;
 }
