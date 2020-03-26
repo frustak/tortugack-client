@@ -3,6 +3,7 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import styles from './SignIn.module.css';
 import { makeStyles } from '@material-ui/core/styles';
+import skull from '../../assets/skull.png';
 
 const useStyles = makeStyles({
   root: {
@@ -18,6 +19,7 @@ function SignIn(props) {
   const classes = useStyles();
   return (
     <div className={styles.SignIn}>
+      <img src={skull} alt="skull" className={styles.skull} />
       <div className={styles.Content}>
         <TextField
           type="text"
