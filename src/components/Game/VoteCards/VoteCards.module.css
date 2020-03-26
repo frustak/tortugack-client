@@ -1,9 +1,10 @@
 .VoteCards {
   display: flex;
-  flex-direction: column;
+  outline: none;
 }
 
-.VoteCard {
-  background-color: lightcoral;
-  border: 2px solid lightgreen;
+.col {
+  display: flex;
+  flex-direction: column;
+  margin: 8px;
 }
