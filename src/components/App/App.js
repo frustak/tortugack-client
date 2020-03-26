@@ -11,6 +11,13 @@ import withCssBaseline from '../../hoc/with-css-baseline';
 import { setToken, getToken, deleteToken } from '../../helpers/cookie-helper';
 import createAxios from '../../services/axios';
 import jwtDecode from 'jwt-decode';
+import Warning from '../Warning/Warning';
+import MainModal from '../MainModal/MainModal';
+import MoveModal from '../Modals/MoveModal/MoveModal';
+import PutChestModal from '../Modals/PutChestModal/PutChestModal';
+import JoinLobbyModal from '../Modals/JoinLobbyModal/JoinLobbyModal';
+import MoveChestModal from '../Modals/MoveChestModal/MoveChestModal';
+import MaroonModal from '../Modals/MaroonModal/MaroonModal';
 
 const ROUTES = {
   ROOT: '/',
@@ -24,14 +31,18 @@ const ROUTES = {
 class App extends Component {
   state = {
     route: ROUTES.ROOT,
+    warning: false,
     loading: false,
+    modal: false,
     username: null,
     lobbies: [],
     lobbyData: null,
     gameData: null,
+    mainModal: false,
   };
 
   pollTime = 5000;
+  mainModalContent;
 
   checkUserState = async () => {
     const lobbyResponse = await this.axios.get('/lobby/my-lobby');
@@ -106,17 +117,14 @@ class App extends Component {
     this.setState({ route: ROUTES.MAIN_MENU });
   };
 
-  joinLobby = async () => {
-    const lobbyID = prompt('enter lobby id');
-    const data = { lobbyId: lobbyID };
+  joinLobby = async lobbyId => {
+    const data = { lobbyId };
     let response;
     response = await this.axios.patch('/lobby/join', data);
-
     this.setState({
       route: ROUTES.FULL_LOBBY,
       lobbyData: response.data,
     });
-
     this.startLobbyPolling();
   };
 
@@ -185,13 +193,99 @@ class App extends Component {
     this.reloadGame();
   };
 
-  componentDidMount = () => {
-    this.axios = createAxios(
-      () => this.setState({ loading: true }),
-      () => this.setState({ loading: false })
-    );
+  closeWarning = () => {
+    this.setState({ warning: false });
+  };
 
+  showModal = () => {
+    this.setState({ modal: true });
+  };
+
+  closeModal = () => {
+    this.setState({ modal: false });
+  };
+
+  closeMainModal = () => {
+    this.setState({ mainModal: false });
+  };
+
+  joinHandler = () => {
+    this.mainModalContent = (
+      <JoinLobbyModal join={this.joinLobby} close={this.closeMainModal} />
+    );
+    this.setState({ mainModal: true });
+  };
+
+  moveHandler = () => {
+    const currentPosition = this.state.gameData.gameStatus.playersPosition[
+      this.state.username
+    ];
+    this.mainModalContent = (
+      <MoveModal
+        close={this.closeMainModal}
+        currentPosition={currentPosition}
+        sendAction={this.sendAction}
+      />
+    );
+    this.setState({ mainModal: true });
+  };
+
+  putChestHandler = () => {
+    this.mainModalContent = (
+      <PutChestModal
+        data={this.state.gameData.gameStatus}
+        close={this.closeMainModal}
+        sendAction={this.sendAction}
+      />
+    );
+    this.setState({ mainModal: true });
+  };
+
+  maroonHandler = () => {
+    this.mainModalContent = (
+      <MaroonModal
+        data={this.state.gameData.gameStatus}
+        close={this.closeMainModal}
+        sendAction={this.sendAction}
+        username={this.state.username}
+      />
+    );
+    this.setState({ mainModal: true });
+  };
+
+  moveChestHandler = () => {
+    this.mainModalContent = (
+      <MoveChestModal
+        data={this.state.gameData.gameStatus}
+        username={this.state.username}
+        close={this.closeMainModal}
+        sendAction={this.sendAction}
+      />
+    );
+    this.setState({ mainModal: true });
+  };
+
+  componentDidMount = () => {
+    let timeoutID;
+    this.axios = createAxios(
+      () => {
+        timeoutID = setTimeout(() => this.setState({ loading: true }), 1000);
+      },
+      () => {
+        clearTimeout(timeoutID);
+        this.setState({ loading: false });
+      },
+      () => {
+        this.setState({ warning: true });
+      }
+    );
     this.verifyUser();
+  };
+
+  vote = voteCardIndex => {
+    const payload = { voteCardIndex };
+    this.sendAction('vote', payload);
+    this.setState({ modal: false });
   };
 
   render = () => {
@@ -210,7 +304,7 @@ class App extends Component {
             logout={this.logout}
             showLobbies={this.showLobbies}
             createLobby={this.createLobby}
-            joinLobby={this.joinLobby}
+            joinLobby={this.joinHandler}
           />
         );
         break;
@@ -220,6 +314,7 @@ class App extends Component {
             lobbies={this.state.lobbies}
             back={this.lobbiesGoBack}
             refresh={this.showLobbies}
+            joinLobby={this.joinLobby}
           />
         );
         break;
@@ -239,6 +334,14 @@ class App extends Component {
             data={this.state.gameData}
             username={this.state.username}
             sendAction={this.sendAction}
+            showModal={this.showModal}
+            modal={this.state.modal}
+            closeModal={this.closeModal}
+            vote={this.vote}
+            moveHandler={this.moveHandler}
+            putChestHandler={this.putChestHandler}
+            moveChestHandler={this.moveChestHandler}
+            maroonHandler={this.maroonHandler}
           />
         );
         break;
@@ -250,6 +353,13 @@ class App extends Component {
       <>
         {output}
         <Loading show={this.state.loading} />
+        <Warning show={this.state.warning} close={this.closeWarning} />
+        <MainModal
+          show={this.state.mainModal}
+          close={() => this.setState({ mainModal: false })}
+        >
+          {this.mainModalContent}
+        </MainModal>
       </>
     );
   };
