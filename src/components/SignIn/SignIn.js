@@ -20,6 +20,7 @@ function SignIn(props) {
   return (
     <div className={styles.SignIn}>
       <img src={skull} alt="skull" className={styles.skull} />
+      <h1>Tortugack Online Board Game</h1>
       <div className={styles.Content}>
         <TextField
           type="text"
