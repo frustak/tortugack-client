@@ -1,3 +1,10 @@
-.Game {
+.row {
   display: flex;
+  justify-content: space-between;
+}
+
+.Game {
+  margin: 8px;
+  display: flex;
+  flex-direction: column;
 }
