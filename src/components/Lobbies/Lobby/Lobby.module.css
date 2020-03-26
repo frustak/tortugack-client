@@ -1,0 +1,38 @@
+.Lobby {
+  padding: 4px 8px;
+  background-color: #263238;
+  color: #eeeeee;
+  border-radius: '2px 2px 0 0 ';
+}
+
+.m {
+  margin: 4px;
+  width: 300px;
+}
+
+.Lobby p {
+  margin: 0;
+}
+
+.Lobby .Players {
+  display: flex;
+  color: white;
+  flex-wrap: wrap;
+}
+
+.row {
+  display: flex;
+}
+
+.col {
+  display: flex;
+  flex-direction: column;
+  margin-left: 8px;
+}
+
+.colBorder {
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid #999999;
+  padding-right: 8px;
+}
