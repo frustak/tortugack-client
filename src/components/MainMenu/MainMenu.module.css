@@ -1,0 +1,25 @@
+.MainMenu {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.MainMenu .Content {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  width: 150px;
+}
+
+.MainMenu .Content * {
+  margin: 2px;
+}
+
+.MainMenu .Content p {
+  margin: 16px 0;
+  color: white;
+  background-color: #263238;
+  border-radius: 4px;
+  padding: 4px;
+}
