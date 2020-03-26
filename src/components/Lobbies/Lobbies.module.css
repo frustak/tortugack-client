@@ -1,0 +1,11 @@
+.Lobbies {
+  margin: 8px;
+  display: flex;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+.Buttons {
+  display: flex;
+  margin: 8px;
+}
