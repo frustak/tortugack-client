@@ -2,6 +2,8 @@ import React from 'react';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
+import franceIcon from '../../../assets/icons/france-flag.png';
+import britainIcon from '../../../assets/icons/britain-flag.png';
 
 const useStyles = makeStyles({
   btn: {
@@ -13,6 +15,11 @@ const useStyles = makeStyles({
   row: {
     display: 'flex',
     justifyContent: 'space-evenly',
+  },
+  image: {
+    width: '32px',
+    height: '32px',
+    marginLeft: '8px',
   },
 });
 
@@ -49,6 +56,11 @@ function MoveChestModal(props) {
       }}
     >
       {button}
+      <img
+        src={button === 'BRITAIN' ? britainIcon : franceIcon}
+        alt=""
+        className={classes.image}
+      />
     </Button>
   ));
 

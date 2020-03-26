@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { Button, Paper } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import styles from './PutChestModal.module.css';
+import franceIcon from '../../../assets/icons/france-flag.png';
+import britainIcon from '../../../assets/icons/britain-flag.png';
 
 const useStyles = makeStyles({
   btn: {
@@ -12,6 +14,16 @@ const useStyles = makeStyles({
   },
   par: {
     margin: '0 0 8px 0',
+    fontSize: 'large',
+  },
+  row: {
+    display: 'flex',
+    justifyContent: 'space-evenly',
+  },
+  image: {
+    width: '32px',
+    height: '32px',
+    marginLeft: '8px',
   },
 });
 
@@ -34,7 +46,9 @@ function PutChestModal(props) {
   if (isStealing) {
     output = (
       <>
-        <p>Which side you want to steal a chest from?</p>
+        <p className={classes.par}>
+          Which team do you want to steal a chest from?
+        </p>
         <Button
           classes={classes.btn}
           variant="contained"
@@ -45,6 +59,7 @@ function PutChestModal(props) {
           }}
         >
           britain
+          <img src={britainIcon} alt="" className={classes.image} />
         </Button>
         <Button
           classes={classes.btn}
@@ -56,6 +71,7 @@ function PutChestModal(props) {
           }}
         >
           france
+          <img src={franceIcon} alt="" className={classes.image} />
         </Button>
       </>
     );
@@ -75,6 +91,7 @@ function PutChestModal(props) {
             }}
           >
             britain
+            <img src={britainIcon} alt="" className={classes.image} />
           </Button>
           <Button
             classes={classes.btn}
@@ -87,13 +104,14 @@ function PutChestModal(props) {
             }}
           >
             france
+            <img src={franceIcon} alt="" className={classes.image} />
           </Button>
         </div>
       </Paper>
     );
   }
 
-  return output;
+  return <div className={classes.row}>{output}</div>;
 }
 
 export default PutChestModal;
