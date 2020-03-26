@@ -1,7 +1,7 @@
 .Cell {
   position: fixed;
-  width: 32px;
-  height: 32px;
+  width: 30px;
+  height: 30px;
   border-radius: 100%;
   font-size: xx-small;
   display: flex;
@@ -10,51 +10,44 @@
 }
 
 .Player_1 {
-  background-color: blue;
+  background-color: #2196f3;
   color: white;
 }
-
 .Player_2 {
-  background-color: green;
+  background-color: #4caf50;
   color: white;
 }
-
 .Player_3 {
-  background-color: red;
+  background-color: #f44336;
+  color: #111111;
 }
-
 .Player_4 {
-  background-color: orange;
-  color: white;
+  background-color: #ff9800;
+  color: #111111;
 }
-
 .Player_5 {
-  background-color: brown;
+  background-color: #795548;
   color: white;
 }
-
 .Player_6 {
-  background-color: purple;
+  background-color: #9c27b0;
   color: white;
 }
-
 .Player_7 {
-  background-color: yellow;
-  color: black;
+  background-color: #ffeb3b;
+  color: #111111;
 }
-
 .Player_8 {
-  background-color: black;
+  background-color: #263238;
   color: white;
 }
-
 .Player_9 {
-  background-color: grey;
-  color: black;
+  background-color: #9e9e9e;
+  color: #111111;
 }
 
 .Chest {
-  background-color: sienna;
-  border-radius: 0;
+  background-color: #cd8500;
+  border-radius: 4px;
   color: white;
 }
