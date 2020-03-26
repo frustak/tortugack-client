@@ -1,0 +1,12 @@
+.FullLobby {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 32px;
+}
+
+.FullLobby .Button {
+  margin: 2px;
+  width: 300px;
+}
