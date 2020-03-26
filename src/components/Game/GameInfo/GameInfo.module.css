@@ -1,32 +1,48 @@
 .GameInfo {
   display: flex;
-  flex-direction: column;
+  margin-top: 8px;
 }
 
 .Player_1 {
-  color: blue;
+  color: #2196f3;
 }
 .Player_2 {
-  color: green;
+  color: #4caf50;
 }
 .Player_3 {
-  color: red;
+  color: #f44336;
 }
 .Player_4 {
-  color: orange;
+  color: #ff9800;
 }
 .Player_5 {
-  color: brown;
+  color: #795548;
 }
 .Player_6 {
-  color: purple;
+  color: #9c27b0;
 }
 .Player_7 {
-  color: yellow;
+  color: #ffeb3b;
 }
 .Player_8 {
-  color: black;
+  color: #263238;
 }
 .Player_9 {
-  color: grey;
+  color: #9e9e9e;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+}
+
+.col {
+  display: flex;
+  flex-direction: column;
+  margin-right: 8px;
+}
+
+.col span {
+  margin: 2px;
+  font-size: large;
 }
