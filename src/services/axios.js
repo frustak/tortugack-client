@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { getToken } from '../helpers/cookie-helper';
 
-const createAxios = (startFunc, endFunc) => {
+const createAxios = (startFunc, endFunc, errFunc) => {
   const instance = axios.create({
     baseURL: 'https://tortugack.herokuapp.com/api/v1/',
   });
@@ -15,6 +15,7 @@ const createAxios = (startFunc, endFunc) => {
     },
     error => {
       endFunc();
+      errFunc();
       return Promise.reject(error);
     }
   );
@@ -26,7 +27,7 @@ const createAxios = (startFunc, endFunc) => {
     },
     error => {
       endFunc();
-      if (error.response.data.detail) alert(error.response.data.detail);
+      errFunc();
       return Promise.reject(error);
     }
   );
