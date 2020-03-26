@@ -1,7 +1,5 @@
 .Loading {
   position: fixed;
-  right: 0;
-  top: 0;
-  background-color: red;
-  color: white;
+  bottom: 8px;
+  right: 8px;
 }
