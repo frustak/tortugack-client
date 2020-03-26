@@ -51,8 +51,11 @@ function GameAction(props) {
   );
   if (
     props.data.playerGameInfo.availableActions.some(action => action === 'vote')
-  )
+  ) {
     voteBtn = null;
+  } else {
+    props.setVoteClickable(false);
+  }
 
   return (
     <div className={styles.GameAction}>
