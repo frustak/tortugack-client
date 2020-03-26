@@ -18,6 +18,7 @@ import PutChestModal from '../Modals/PutChestModal/PutChestModal';
 import JoinLobbyModal from '../Modals/JoinLobbyModal/JoinLobbyModal';
 import MoveChestModal from '../Modals/MoveChestModal/MoveChestModal';
 import MaroonModal from '../Modals/MaroonModal/MaroonModal';
+import Disabled from '../Disabled/Disabled';
 
 const ROUTES = {
   ROOT: '/',
@@ -39,6 +40,8 @@ class App extends Component {
     lobbyData: null,
     gameData: null,
     mainModal: false,
+    warningMsg: null,
+    isDisabled: false,
   };
 
   pollTime = 5000;
@@ -270,13 +273,15 @@ class App extends Component {
     this.axios = createAxios(
       () => {
         timeoutID = setTimeout(() => this.setState({ loading: true }), 1000);
+        this.setState({ isDisabled: true });
       },
       () => {
         clearTimeout(timeoutID);
         this.setState({ loading: false });
+        this.setState({ isDisabled: false });
       },
-      () => {
-        this.setState({ warning: true });
+      msg => {
+        this.setState({ warning: true, warningMsg: msg });
       }
     );
     this.verifyUser();
@@ -353,13 +358,18 @@ class App extends Component {
       <>
         {output}
         <Loading show={this.state.loading} />
-        <Warning show={this.state.warning} close={this.closeWarning} />
+        <Warning
+          show={this.state.warning}
+          close={this.closeWarning}
+          msg={this.state.warningMsg}
+        />
         <MainModal
           show={this.state.mainModal}
           close={() => this.setState({ mainModal: false })}
         >
           {this.mainModalContent}
         </MainModal>
+        <Disabled is={this.state.isDisabled} />
       </>
     );
   };
