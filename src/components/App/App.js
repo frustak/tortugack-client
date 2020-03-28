@@ -19,6 +19,7 @@ import JoinLobbyModal from '../Modals/JoinLobbyModal/JoinLobbyModal';
 import MoveChestModal from '../Modals/MoveChestModal/MoveChestModal';
 import MaroonModal from '../Modals/MaroonModal/MaroonModal';
 import Disabled from '../Disabled/Disabled';
+import TwoEventCardsModal from '../Modals/TwoEventCardsModal/TwoEventCardsModal';
 
 const ROUTES = {
   ROOT: '/',
@@ -219,6 +220,17 @@ class App extends Component {
     this.setState({ mainModal: true });
   };
 
+  viewTwoCardsHandler = () => {
+    this.mainModalContent = (
+      <TwoEventCardsModal
+        data={this.state.gameData}
+        sendAction={this.sendAction}
+        close={this.closeMainModal}
+      />
+    );
+    this.setState({ mainModal: true });
+  };
+
   moveHandler = () => {
     const currentPosition = this.state.gameData.gameStatus.playersPosition[
       this.state.username
@@ -347,6 +359,7 @@ class App extends Component {
             putChestHandler={this.putChestHandler}
             moveChestHandler={this.moveChestHandler}
             maroonHandler={this.maroonHandler}
+            viewTwoCardsHandler={this.viewTwoCardsHandler}
           />
         );
         break;
