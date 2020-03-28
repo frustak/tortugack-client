@@ -22,6 +22,7 @@ function Game(props) {
           setVoteClickable={setVoteClickable}
           moveChestHandler={props.moveChestHandler}
           maroonHandler={props.maroonHandler}
+          viewTwoCardsHandler={props.viewTwoCardsHandler}
         />
         <VoteCards
           data={props.data.gameStatus}
