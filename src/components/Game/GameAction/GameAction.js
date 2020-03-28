@@ -48,6 +48,7 @@ function GameAction(props) {
         props.setVoteClickable(true);
       }
       if (action === 'view two event cards') {
+        click = props.viewTwoCardsHandler;
         icon = twoEventIcon;
       }
       if (action === 'reveal one event card') {
