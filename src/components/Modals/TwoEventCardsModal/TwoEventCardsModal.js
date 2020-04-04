@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import _ from 'lodash';
 import HiddenEventCard from './HiddenEventCard/HiddenEventCard';
-import { Button, Paper } from '@material-ui/core';
+import { Button } from '@material-ui/core';
 import RevealedEventCard from './RevealedEventCard/RevealedEventCard';
 
 const useStyles = makeStyles({
