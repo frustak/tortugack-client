@@ -43,10 +43,10 @@ class App extends Component {
     mainModal: false,
     warningMsg: null,
     isDisabled: false,
+    mainModalContent: null,
   };
 
   pollTime = 5000;
-  mainModalContent;
 
   checkUserState = async () => {
     const lobbyResponse = await this.axios.get('/lobby/my-lobby');
@@ -79,7 +79,7 @@ class App extends Component {
     }
   };
 
-  usernameHandler = event => {
+  usernameHandler = (event) => {
     this.setState({ username: event.target.value });
   };
 
@@ -121,7 +121,7 @@ class App extends Component {
     this.setState({ route: ROUTES.MAIN_MENU });
   };
 
-  joinLobby = async lobbyId => {
+  joinLobby = async (lobbyId) => {
     const data = { lobbyId };
     let response;
     response = await this.axios.patch('/lobby/join', data);
@@ -214,70 +214,27 @@ class App extends Component {
   };
 
   joinHandler = () => {
-    this.mainModalContent = (
-      <JoinLobbyModal join={this.joinLobby} close={this.closeMainModal} />
-    );
-    this.setState({ mainModal: true });
+    this.setState({ mainModal: true, mainModalContent: 'JoinLobbyModal' });
   };
 
   viewTwoCardsHandler = () => {
-    this.mainModalContent = (
-      <TwoEventCardsModal
-        data={this.state.gameData}
-        sendAction={this.sendAction}
-        close={this.closeMainModal}
-      />
-    );
-    this.setState({ mainModal: true });
+    this.setState({ mainModal: true, mainModalContent: 'TwoEventCardsModal' });
   };
 
   moveHandler = () => {
-    const currentPosition = this.state.gameData.gameStatus.playersPosition[
-      this.state.username
-    ];
-    this.mainModalContent = (
-      <MoveModal
-        close={this.closeMainModal}
-        currentPosition={currentPosition}
-        sendAction={this.sendAction}
-      />
-    );
-    this.setState({ mainModal: true });
+    this.setState({ mainModal: true, mainModalContent: 'MoveModal' });
   };
 
   putChestHandler = () => {
-    this.mainModalContent = (
-      <PutChestModal
-        data={this.state.gameData.gameStatus}
-        close={this.closeMainModal}
-        sendAction={this.sendAction}
-      />
-    );
-    this.setState({ mainModal: true });
+    this.setState({ mainModal: true, mainModalContent: 'PutChestModal' });
   };
 
   maroonHandler = () => {
-    this.mainModalContent = (
-      <MaroonModal
-        data={this.state.gameData.gameStatus}
-        close={this.closeMainModal}
-        sendAction={this.sendAction}
-        username={this.state.username}
-      />
-    );
-    this.setState({ mainModal: true });
+    this.setState({ mainModal: true, mainModalContent: 'MaroonModal' });
   };
 
   moveChestHandler = () => {
-    this.mainModalContent = (
-      <MoveChestModal
-        data={this.state.gameData.gameStatus}
-        username={this.state.username}
-        close={this.closeMainModal}
-        sendAction={this.sendAction}
-      />
-    );
-    this.setState({ mainModal: true });
+    this.setState({ mainModal: true, mainModalContent: 'MoveChestModal' });
   };
 
   componentDidMount = () => {
@@ -292,14 +249,14 @@ class App extends Component {
         this.setState({ loading: false });
         this.setState({ isDisabled: false });
       },
-      msg => {
+      (msg) => {
         this.setState({ warning: true, warningMsg: msg });
       }
     );
     this.verifyUser();
   };
 
-  vote = voteCardIndex => {
+  vote = (voteCardIndex) => {
     const payload = { voteCardIndex };
     this.sendAction('vote', payload);
     this.setState({ modal: false });
@@ -307,6 +264,7 @@ class App extends Component {
 
   render = () => {
     let output;
+    let modalContent;
 
     switch (this.state.route) {
       case ROUTES.SIGN_IN:
@@ -367,6 +325,66 @@ class App extends Component {
         output = <></>;
     }
 
+    switch (this.state.mainModalContent) {
+      case 'JoinLobbyModal':
+        modalContent = (
+          <JoinLobbyModal join={this.joinLobby} close={this.closeMainModal} />
+        );
+        break;
+      case 'TwoEventCardsModal':
+        modalContent = (
+          <TwoEventCardsModal
+            data={this.state.gameData}
+            sendAction={this.sendAction}
+            close={this.closeMainModal}
+          />
+        );
+        break;
+      case 'MoveModal':
+        const currentPosition = this.state.gameData.gameStatus.playersPosition[
+          this.state.username
+        ];
+        modalContent = (
+          <MoveModal
+            close={this.closeMainModal}
+            currentPosition={currentPosition}
+            sendAction={this.sendAction}
+          />
+        );
+        break;
+      case 'PutChestModal':
+        modalContent = (
+          <PutChestModal
+            data={this.state.gameData.gameStatus}
+            close={this.closeMainModal}
+            sendAction={this.sendAction}
+          />
+        );
+        break;
+      case 'MaroonModal':
+        modalContent = (
+          <MaroonModal
+            data={this.state.gameData.gameStatus}
+            close={this.closeMainModal}
+            sendAction={this.sendAction}
+            username={this.state.username}
+          />
+        );
+        break;
+      case 'MoveChestModal':
+        modalContent = (
+          <MoveChestModal
+            data={this.state.gameData.gameStatus}
+            username={this.state.username}
+            close={this.closeMainModal}
+            sendAction={this.sendAction}
+          />
+        );
+        break;
+      default:
+        modalContent = null;
+    }
+
     return (
       <>
         {output}
@@ -380,7 +398,7 @@ class App extends Component {
           show={this.state.mainModal}
           close={() => this.setState({ mainModal: false })}
         >
-          {this.mainModalContent}
+          {modalContent}
         </MainModal>
         <Disabled is={this.state.isDisabled} />
       </>
