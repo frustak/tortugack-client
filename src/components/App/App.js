@@ -20,6 +20,7 @@ import MoveChestModal from '../Modals/MoveChestModal/MoveChestModal';
 import MaroonModal from '../Modals/MaroonModal/MaroonModal';
 import Disabled from '../Disabled/Disabled';
 import TwoEventCardsModal from '../Modals/TwoEventCardsModal/TwoEventCardsModal';
+import RevealCardModal from '../Modals/RevealCardModal/RevealCardModal';
 
 const ROUTES = {
   ROOT: '/',
@@ -79,7 +80,7 @@ class App extends Component {
     }
   };
 
-  usernameHandler = (event) => {
+  usernameHandler = event => {
     this.setState({ username: event.target.value });
   };
 
@@ -121,7 +122,7 @@ class App extends Component {
     this.setState({ route: ROUTES.MAIN_MENU });
   };
 
-  joinLobby = async (lobbyId) => {
+  joinLobby = async lobbyId => {
     const data = { lobbyId };
     let response;
     response = await this.axios.patch('/lobby/join', data);
@@ -237,6 +238,16 @@ class App extends Component {
     this.setState({ mainModal: true, mainModalContent: 'MoveChestModal' });
   };
 
+  vote = voteCardIndex => {
+    const payload = { voteCardIndex };
+    this.sendAction('vote', payload);
+    this.setState({ modal: false });
+  };
+
+  revealCardHandler = () => {
+    this.setState({ mainModal: true, mainModalContent: 'RevealCardModal' });
+  };
+
   componentDidMount = () => {
     let timeoutID;
     this.axios = createAxios(
@@ -249,17 +260,11 @@ class App extends Component {
         this.setState({ loading: false });
         this.setState({ isDisabled: false });
       },
-      (msg) => {
+      msg => {
         this.setState({ warning: true, warningMsg: msg });
       }
     );
     this.verifyUser();
-  };
-
-  vote = (voteCardIndex) => {
-    const payload = { voteCardIndex };
-    this.sendAction('vote', payload);
-    this.setState({ modal: false });
   };
 
   render = () => {
@@ -318,11 +323,12 @@ class App extends Component {
             moveChestHandler={this.moveChestHandler}
             maroonHandler={this.maroonHandler}
             viewTwoCardsHandler={this.viewTwoCardsHandler}
+            revealCardHandler={this.revealCardHandler}
           />
         );
         break;
       default:
-        output = <></>;
+        output = null;
     }
 
     switch (this.state.mainModalContent) {
@@ -378,6 +384,17 @@ class App extends Component {
             username={this.state.username}
             close={this.closeMainModal}
             sendAction={this.sendAction}
+          />
+        );
+        break;
+      case 'RevealCardModal':
+        const eventCardsDeckCount = this.state.gameData.gameStatus
+          .eventCardsDeckCount;
+        modalContent = (
+          <RevealCardModal
+            eventCardsDeckCount={eventCardsDeckCount}
+            sendAction={this.sendAction}
+            close={this.closeMainModal}
           />
         );
         break;
