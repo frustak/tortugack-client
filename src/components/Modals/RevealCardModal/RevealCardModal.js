@@ -11,13 +11,13 @@ const useStyles = makeStyles({
 
 function RevealCardModal({ eventCardsDeckCount, sendAction, close }) {
   const classes = useStyles();
-  
+
   const cardClickHandler = eventCardIndex => {
     sendAction('reveal one event card', { eventCardIndex });
     close();
   };
 
-  const output = _.range(eventCardsDeckCount).map(index => (
+  const output = _.range(1, eventCardsDeckCount + 1).map(index => (
     <HiddenEventCard
       key={index}
       index={index}
