@@ -72,7 +72,7 @@ function GameAction(props) {
           break;
         case 'USE-EVENT-CARD':
           icon = useCardIcon;
-          click = props.sendAction('SEE-EVENT-CARD-OPTIONS');
+          click = () => props.sendAction('SEE-EVENT-CARD-OPTIONS');
           break;
         case 'KEEP-EVENT-CARD':
           icon = keepCardIcon;
