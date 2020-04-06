@@ -21,6 +21,7 @@ import MaroonModal from '../Modals/MaroonModal/MaroonModal';
 import Disabled from '../Disabled/Disabled';
 import TwoEventCardsModal from '../Modals/TwoEventCardsModal/TwoEventCardsModal';
 import RevealCardModal from '../Modals/RevealCardModal/RevealCardModal';
+import CardOptionModal from '../Modals/CardOptionModal/CardOptionModal';
 
 const ROUTES = {
   ROOT: '/',
@@ -238,6 +239,17 @@ class App extends Component {
     this.setState({ mainModal: true, mainModalContent: 'MoveChestModal' });
   };
 
+  useEventCardHandler = () => {
+    if (
+      this.state.gameData.gameStatus.lastAction.Data.eventCard.slug.length === 0
+    ) {
+      this.sendAction('USE-EVENT-CARD');
+      return;
+    }
+
+    this.setState({ mainModal: true, mainModalContent: 'CardOptionModal' });
+  };
+
   vote = voteCardIndex => {
     const payload = { voteCardIndex };
     this.sendAction('vote', payload);
@@ -398,6 +410,10 @@ class App extends Component {
           />
         );
         break;
+        case 'CardOptionModal':
+          const slug = this.state.gameData.gameStatus.lastAction.Data.eventCard.slug;
+          modalContent = <CardOptionModal slug={slug}/>
+          break;
       default:
         modalContent = null;
     }
