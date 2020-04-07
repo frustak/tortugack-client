@@ -45,6 +45,7 @@ function TwoEventCardsModal(props) {
   ));
 
   function confirmHandler() {
+    eventCardsIndexes.sort();
     props.sendAction('view two event cards', { eventCardsIndexes });
     setShowDetails(true);
   }
