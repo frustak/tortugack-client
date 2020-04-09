@@ -22,6 +22,8 @@ import Disabled from '../Disabled/Disabled';
 import TwoEventCardsModal from '../Modals/TwoEventCardsModal/TwoEventCardsModal';
 import RevealCardModal from '../Modals/RevealCardModal/RevealCardModal';
 import CardOptionModal from '../Modals/CardOptionModal/CardOptionModal';
+import WinnerModal from '../Modals/WinnerModal/WinnerModal';
+import MyEventsModal from '../Modals/MyEventsModal/MyEventsModal';
 
 const ROUTES = {
   ROOT: '/',
@@ -46,6 +48,7 @@ class App extends Component {
     warningMsg: null,
     isDisabled: false,
     mainModalContent: null,
+    seeOptions: false,
   };
 
   pollTime = 5000;
@@ -171,10 +174,10 @@ class App extends Component {
     clearInterval(this.pollTimer);
   };
 
-  reloadGame = async () => {
+  reloadGame = async callback => {
     const response = await this.axios.get('/game/my-game');
     const data = response.data;
-    this.setState({ gameData: data });
+    this.setState({ gameData: data }, callback);
   };
 
   startGamePolling = async () => {
@@ -187,7 +190,7 @@ class App extends Component {
     clearInterval(this.pollTimer);
   };
 
-  sendAction = async (actionType, payload) => {
+  sendAction = async (actionType, payload, callback) => {
     const data = {
       gameId: this.state.gameData.gameId,
       action: {
@@ -196,7 +199,7 @@ class App extends Component {
       payload,
     };
     await this.axios.post('/game/action', data);
-    this.reloadGame();
+    this.reloadGame(callback);
   };
 
   closeWarning = () => {
@@ -239,16 +242,30 @@ class App extends Component {
     this.setState({ mainModal: true, mainModalContent: 'MoveChestModal' });
   };
 
-  useEventCardHandler = () => {
-    if (
-      this.state.gameData.gameStatus.lastAction.Data.eventCard.slug.length === 0
-    ) {
+  useEventCardHandler = slug => {
+    this.sendAction(
+      'SEE-EVENT-CARD-OPTIONS',
+      { eventCardToSeeSlug: slug },
+      () => {
+        this.setState({ seeOptions: true });
+      }
+    );
+  };
+
+  componentDidUpdate() {
+    if (!this.state.seeOptions) return;
+    const { options } = this.state.gameData.gameStatus.lastAction.actionData;
+    if (options.length === 0) {
       this.sendAction('USE-EVENT-CARD');
+      this.setState({ seeOptions: false });
       return;
     }
-
-    this.setState({ mainModal: true, mainModalContent: 'CardOptionModal' });
-  };
+    this.setState({
+      mainModal: true,
+      mainModalContent: 'CardOptionModal',
+      seeOptions: false,
+    });
+  }
 
   vote = voteCardIndex => {
     const payload = { voteCardIndex };
@@ -258,6 +275,16 @@ class App extends Component {
 
   revealCardHandler = () => {
     this.setState({ mainModal: true, mainModalContent: 'RevealCardModal' });
+  };
+
+  leaveGameToMenu = () => {
+    this.axios.get('/game/leave');
+    this.setState({ route: ROUTES.MAIN_MENU, gameData: null });
+    this.endGamePolling();
+  };
+
+  myEventCardsHandler = () => {
+    this.setState({ mainModal: true, mainModalContent: 'MyEventsModal' });
   };
 
   componentDidMount = () => {
@@ -336,6 +363,8 @@ class App extends Component {
             maroonHandler={this.maroonHandler}
             viewTwoCardsHandler={this.viewTwoCardsHandler}
             revealCardHandler={this.revealCardHandler}
+            useEventCardHandler={this.useEventCardHandler}
+            myEventCardsHandler={this.myEventCardsHandler}
           />
         );
         break;
@@ -410,10 +439,29 @@ class App extends Component {
           />
         );
         break;
-        case 'CardOptionModal':
-          const slug = this.state.gameData.gameStatus.lastAction.Data.eventCard.slug;
-          modalContent = <CardOptionModal slug={slug}/>
-          break;
+      case 'CardOptionModal':
+        const { actionData } = this.state.gameData.gameStatus.lastAction;
+        const eventCardSlug = actionData?.eventCardSlug;
+        const options = actionData?.options;
+
+        modalContent = (
+          <CardOptionModal
+            options={options}
+            slug={eventCardSlug}
+            sendAction={this.sendAction}
+            close={this.closeMainModal}
+          />
+        );
+        break;
+      case 'MyEventsModal':
+        modalContent = (
+          <MyEventsModal
+            cards={this.state.gameData.gameStatus.playerGameInfo.eventCards}
+            close={this.closeMainModal}
+            eventCardHandler={this.useEventCardHandler}
+          />
+        );
+        break;
       default:
         modalContent = null;
     }
@@ -433,6 +481,13 @@ class App extends Component {
         >
           {modalContent}
         </MainModal>
+        {this.state.gameData?.gameStatus?.winner ? (
+          <WinnerModal
+            winner={this.state.gameData.gameStatus.winner}
+            leaveGameToLobby={this.leaveGameToLobby}
+            leaveGameToMenu={this.leaveGameToMenu}
+          />
+        ) : null}
         <Disabled is={this.state.isDisabled} />
       </>
     );
