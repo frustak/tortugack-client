@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, makeStyles } from '@material-ui/core';
+import { Card, makeStyles, Button } from '@material-ui/core';
 
 const useStyles = makeStyles({
   card: {
@@ -19,18 +19,34 @@ const useStyles = makeStyles({
   smallest: {
     fontSize: 'medium',
   },
-  image: {},
+  btn: {
+    marginLeft: 8,
+    marginRight: 8,
+    width: 300,
+  },
 });
 
 function RevealedEventCard(props) {
   const classes = useStyles();
 
   return (
-    <Card className={classes.card}>
-      <img src={props.imageUrl} alt={props.title} className={classes.image} />
-      <p className={classes.small}>{props.title}</p>
-      <p className={classes.smallest}>{props.description}</p>
-    </Card>
+    <>
+      <Card className={classes.card}>
+        <img src={props.imageUrl} alt={props.title} className={classes.image} />
+        <p className={classes.small}>{props.title}</p>
+        <p className={classes.smallest}>{props.description}</p>
+      </Card>
+      {props.click ? (
+        <Button
+          className={classes.btn}
+          variant="contained"
+          color="primary"
+          onClick={props.click}
+        >
+          use
+        </Button>
+      ) : null}
+    </>
   );
 }
 
