@@ -14,6 +14,7 @@ import moveChestIcon from '../../../assets/icons/move-chest.png';
 import voteCardIcon from '../../../assets/icons/vote-card.png';
 import useCardIcon from '../../../assets/icons/use-card.png';
 import keepCardIcon from '../../../assets/icons/keep-card.png';
+import eventCardsIcon from '../../../assets/icons/event-cards.png';
 
 const useStyles = makeStyles({
   root: {
@@ -72,7 +73,7 @@ function GameAction(props) {
           break;
         case 'USE-EVENT-CARD':
           icon = useCardIcon;
-          click = () => props.sendAction('SEE-EVENT-CARD-OPTIONS');
+          click = () => props.useEventCardHandler(props.data.lastAction.actionData.eventCard);
           break;
         case 'KEEP-EVENT-CARD':
           icon = keepCardIcon;
@@ -108,10 +109,24 @@ function GameAction(props) {
     props.setVoteClickable(false);
   }
 
+  let eventBtn = null;
+  if (
+    props.data.playerGameInfo.eventCards.length > 0 &&
+    props.data.turn.username === props.username
+  ) {
+    eventBtn = (
+      <Button variant="outlined" onClick={props.myEventCardsHandler} classes={classes}>
+        event cards
+        <img src={eventCardsIcon} alt="" className={styles.Icon} />
+      </Button>
+    );
+  }
+
   return (
     <div className={styles.GameAction}>
       {output}
       {voteBtn}
+      {eventBtn}
     </div>
   );
 }
