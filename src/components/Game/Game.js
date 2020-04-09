@@ -24,6 +24,8 @@ function Game(props) {
           maroonHandler={props.maroonHandler}
           viewTwoCardsHandler={props.viewTwoCardsHandler}
           revealCardHandler={props.revealCardHandler}
+          useEventCardHandler={props.useEventCardHandler}
+          myEventCardsHandler={props.myEventCardsHandler}
         />
         <VoteCards
           data={props.data.gameStatus}
