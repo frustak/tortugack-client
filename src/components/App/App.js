@@ -5,9 +5,7 @@ import Lobbies from '../Lobbies/Lobbies';
 import FullLobby from '../FullLobby/FullLobby';
 import Game from '../Game/Game';
 import Loading from '../Loading/Loading';
-
 import withCssBaseline from '../../hoc/with-css-baseline';
-
 import { setToken, getToken, deleteToken } from '../../helpers/cookie-helper';
 import createAxios from '../../services/axios';
 import jwtDecode from 'jwt-decode';
@@ -24,6 +22,7 @@ import RevealCardModal from '../Modals/RevealCardModal/RevealCardModal';
 import CardOptionModal from '../Modals/CardOptionModal/CardOptionModal';
 import WinnerModal from '../Modals/WinnerModal/WinnerModal';
 import MyEventsModal from '../Modals/MyEventsModal/MyEventsModal';
+import styles from './App.module.css';
 
 const ROUTES = {
   ROOT: '/',
@@ -467,7 +466,7 @@ class App extends Component {
     }
 
     return (
-      <>
+      <div className={styles.Background}>
         {output}
         <Loading show={this.state.loading} />
         <Warning
@@ -489,7 +488,7 @@ class App extends Component {
           />
         ) : null}
         <Disabled is={this.state.isDisabled} />
-      </>
+      </div>
     );
   };
 }
