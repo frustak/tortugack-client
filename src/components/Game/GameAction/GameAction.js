@@ -73,7 +73,10 @@ function GameAction(props) {
           break;
         case 'USE-EVENT-CARD':
           icon = useCardIcon;
-          click = () => props.useEventCardHandler(props.data.lastAction.actionData.eventCard);
+          click = () =>
+            props.useEventCardHandler(
+              props.data.lastAction.actionData.eventCard.slug
+            );
           break;
         case 'KEEP-EVENT-CARD':
           icon = keepCardIcon;
@@ -115,7 +118,11 @@ function GameAction(props) {
     props.data.turn.username === props.username
   ) {
     eventBtn = (
-      <Button variant="outlined" onClick={props.myEventCardsHandler} classes={classes}>
+      <Button
+        variant="outlined"
+        onClick={props.myEventCardsHandler}
+        classes={classes}
+      >
         event cards
         <img src={eventCardsIcon} alt="" className={styles.Icon} />
       </Button>
