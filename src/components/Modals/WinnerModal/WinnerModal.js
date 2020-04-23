@@ -71,7 +71,7 @@ function WinnerModal({ winner, leaveGameToMenu }) {
   return (
     <div className={classes.container}>
       <Paper className={classes.paperStyle}>
-        <p>Game Has Ended!</p>
+        <h2>Game Has Ended!</h2>
         <p className={classes.winnerContainer}>
           The Winner Team is: {winnerTeam}{' '}
           <img src={flag} alt="" className={classes.iconStyle} />
