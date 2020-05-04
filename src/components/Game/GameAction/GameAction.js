@@ -8,6 +8,7 @@ import twoEventIcon from '../../../assets/icons/two-cards.png';
 import cardIcon from '../../../assets/icons/card.png';
 import forceCardIcon from '../../../assets/icons/force-card.png';
 import mutinyIcon from '../../../assets/icons/mutiny.png';
+import brawlIcon from '../../../assets/icons/brawl.png';
 import attackIcon from '../../../assets/icons/attack.png';
 import maroonIcon from '../../../assets/icons/maroon.png';
 import moveChestIcon from '../../../assets/icons/move-chest.png';
@@ -70,6 +71,9 @@ function GameAction(props) {
           break;
         case 'call for an attack':
           icon = attackIcon;
+          break;
+        case 'call for brawl':
+          icon = brawlIcon;
           break;
         case 'USE-EVENT-CARD':
           icon = useCardIcon;

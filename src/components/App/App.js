@@ -48,6 +48,7 @@ class App extends Component {
     isDisabled: false,
     mainModalContent: null,
     seeOptions: false,
+    whatEventCard: null,
   };
 
   pollTime = 5000;
@@ -242,6 +243,7 @@ class App extends Component {
   };
 
   useEventCardHandler = slug => {
+    console.log('gmmm');
     this.sendAction(
       'SEE-EVENT-CARD-OPTIONS',
       { eventCardToSeeSlug: slug },
@@ -255,7 +257,11 @@ class App extends Component {
     if (!this.state.seeOptions) return;
     const { options } = this.state.gameData.gameStatus.lastAction.actionData;
     if (options.length === 0) {
-      this.sendAction('USE-EVENT-CARD');
+      const data = {
+        eventCardToUse: this.state.gameData.gameStatus.lastAction.actionData
+          .eventCardSlug,
+      };
+      this.sendAction('USE-EVENT-CARD', data);
       this.setState({ seeOptions: false });
       return;
     }
