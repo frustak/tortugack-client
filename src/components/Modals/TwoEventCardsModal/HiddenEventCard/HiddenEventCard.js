@@ -5,7 +5,7 @@ import CheckIcon from '@material-ui/icons/Check';
 
 const useStyles = makeStyles({
   card: {
-    width: 300,
+    width: 290,
     height: 500,
     margin: 8,
     cursor: 'pointer',
