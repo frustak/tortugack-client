@@ -4,6 +4,7 @@ import _ from 'lodash';
 import HiddenEventCard from './HiddenEventCard/HiddenEventCard';
 import { Button } from '@material-ui/core';
 import RevealedEventCard from './RevealedEventCard/RevealedEventCard';
+import UnRevealedCard from './UnRevealedCard/UnRevealedCard';
 
 const useStyles = makeStyles({
   row: {
@@ -13,6 +14,9 @@ const useStyles = makeStyles({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
+  },
+  placeHolder: {
+    height: 36,
   },
 });
 
@@ -34,8 +38,7 @@ function TwoEventCardsModal(props) {
   }
 
   const eventCard = _.range(
-    1,
-    props.data.gameStatus.eventCardsDeckCount + 1
+    props.data.gameStatus.eventCardsDeckCount
   ).map(index => (
     <HiddenEventCard
       index={index}
@@ -51,16 +54,24 @@ function TwoEventCardsModal(props) {
   }
 
   if (showDetails) {
-    const revealedCards = props.data.gameStatus.playerGameInfo.seenEventCards.map(
-      card => (
+    const cards = props.data.gameStatus.playerGameInfo.seenEventCards;
+    const revealedCards = new Array(5);
+    revealedCards.fill(<UnRevealedCard />);
+    _.forIn(cards, (value, key) => {
+      revealedCards[key] = (
         <RevealedEventCard
-          title={card.title}
-          description={card.description}
-          imageUrl={card.imageUrl}
+          title={value.title}
+          description={value.description}
+          imageUrl={value.imageUrl}
         />
-      )
+      );
+    });
+    return (
+      <div className={classes.col}>
+        <div className={classes.row}>{revealedCards}</div>
+        <div className={classes.placeHolder}></div>
+      </div>
     );
-    return <div className={classes.row}>{revealedCards}</div>;
   } else {
     return (
       <div className={classes.col}>
