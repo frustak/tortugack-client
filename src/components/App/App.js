@@ -243,7 +243,6 @@ class App extends Component {
   };
 
   useEventCardHandler = slug => {
-    console.log('gmmm');
     this.sendAction(
       'SEE-EVENT-CARD-OPTIONS',
       { eventCardToSeeSlug: slug },
