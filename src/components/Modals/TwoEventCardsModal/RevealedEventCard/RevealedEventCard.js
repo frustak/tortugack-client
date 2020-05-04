@@ -3,7 +3,7 @@ import { Card, makeStyles, Button } from '@material-ui/core';
 
 const useStyles = makeStyles({
   card: {
-    width: 300,
+    width: 290,
     height: 500,
     margin: 8,
     padding: 8,
@@ -22,7 +22,7 @@ const useStyles = makeStyles({
   btn: {
     marginLeft: 8,
     marginRight: 8,
-    width: 300,
+    width: 290,
   },
 });
 
@@ -42,6 +42,7 @@ function RevealedEventCard(props) {
           variant="contained"
           color="primary"
           onClick={props.click}
+          disabled={props.isDisabled}
         >
           use
         </Button>
