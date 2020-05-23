@@ -54,7 +54,7 @@ function VoteCards(props) {
       <Card
         className={props.clickable ? classes.card : classes.cardNotClickable}
         elevation={0}
-        onClick={props.clickable ? () => props.vote(index + 1) : null}
+        onClick={props.clickable ? () => props.vote(index) : null}
         key={index}
       >
         <div className={styles.col}>
