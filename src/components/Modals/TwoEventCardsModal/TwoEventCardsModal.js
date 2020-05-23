@@ -44,6 +44,7 @@ function TwoEventCardsModal(props) {
       index={index}
       cardClickHandler={cardClickHandler}
       selected={eventCardsIndexes.includes(index)}
+      key={index}
     />
   ));
 
