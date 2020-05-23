@@ -104,7 +104,7 @@ function GameAction(props) {
 
   let voteBtn = (
     <Button variant="outlined" onClick={props.showModal} classes={classes}>
-      vote cards
+      view vote cards
       <img src={voteCardIcon} alt="" className={styles.Icon} />
     </Button>
   );
