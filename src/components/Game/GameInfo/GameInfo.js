@@ -49,7 +49,7 @@ function GameInfo({ data, username }) {
 
 const mapStateToProps = state => {
   return {
-    data: state.game.gameStatus,
+    data: state.game.data.gameStatus,
     username: state.user.username,
   };
 };
