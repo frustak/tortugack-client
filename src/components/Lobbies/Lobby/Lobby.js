@@ -12,13 +12,13 @@ const useStyles = makeStyles({
 });
 
 function Lobby(props) {
+  const btnClasses = useStyles();
   const data = props.data;
   const players = data.players.map((player, index) => {
     if (data.players.length - 1 === index) return `${player.username}`;
     return `${player.username}, `;
   });
 
-  const btnClasses = useStyles();
   let output = null;
   if (props.showBtn)
     output = (

@@ -1,43 +1,40 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { connect } from 'react-redux';
+
 import styles from './Game.module.css';
 import GameMap from './GameMap/GameMap';
-import GameInfo from './GameInfo/GameInfo';
 import GameAction from './GameAction/GameAction';
-import VoteCards from './VoteCards/VoteCards';
+import { startGamePolling, stopGamePolling } from '../../actions';
 
-function Game(props) {
-  const [voteClickable, setVoteClickable] = useState(false);
+class Game extends React.Component {
+  componentDidMount() {
+    this.props.startGamePolling();
+  }
 
-  return (
-    <div className={styles.Game}>
-      <div className={styles.row}>
-        <GameMap data={props.data.gameStatus} />
-        <GameAction
-          data={props.data.gameStatus}
-          sendAction={props.sendAction}
-          username={props.username}
-          showModal={props.showModal}
-          moveHandler={props.moveHandler}
-          putChestHandler={props.putChestHandler}
-          setVoteClickable={setVoteClickable}
-          moveChestHandler={props.moveChestHandler}
-          maroonHandler={props.maroonHandler}
-          viewTwoCardsHandler={props.viewTwoCardsHandler}
-          revealCardHandler={props.revealCardHandler}
-          useEventCardHandler={props.useEventCardHandler}
-          myEventCardsHandler={props.myEventCardsHandler}
-        />
-        <VoteCards
-          data={props.data.gameStatus}
-          show={props.modal}
-          close={props.closeModal}
-          vote={props.vote}
-          clickable={voteClickable}
-        />
+  componentWillUnmount() {
+    this.props.stopGamePolling();
+  }
+
+  render() {
+    if (!this.props.gameData) return null;
+
+    return (
+      <div className={styles.Game}>
+        <div className={styles.row}>
+          <GameMap />
+          <GameAction />
+        </div>
+        {/* <GameInfo /> */}
       </div>
-      <GameInfo data={props.data.gameStatus} username={props.username} />
-    </div>
-  );
+    );
+  }
 }
 
-export default Game;
+const mapStateToProps = state => {
+  return { gameData: state.game.data };
+};
+
+export default connect(mapStateToProps, {
+  startGamePolling,
+  stopGamePolling,
+})(Game);

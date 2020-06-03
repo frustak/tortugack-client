@@ -1,26 +1,44 @@
 import React from 'react';
+import Button from '@material-ui/core/Button';
+import { connect } from 'react-redux';
+
 import Lobby from './Lobby/Lobby';
 import styles from './Lobbies.module.css';
-import Button from '@material-ui/core/Button';
+import { fetchLobbies, joinLobby } from '../../actions';
 
-function Lobbies(props) {
-  const lobbies = props.lobbies.map(lobby => (
-    <Lobby data={lobby} key={lobby.id} showBtn joinLobby={props.joinLobby}/>
-  ));
+class Lobbies extends React.Component {
+  componentDidMount() {
+    this.props.fetchLobbies();
+  }
 
-  return (
-    <>
-      <div className={styles.Buttons}>
-        <Button color="primary" onClick={props.refresh}>
-          refresh
-        </Button>
-        <Button color="secondary" onClick={props.back}>
-          back
-        </Button>
-      </div>
-      <div className={styles.Lobbies}>{lobbies}</div>
-    </>
-  );
+  render() {
+    if (!this.props.lobbies) return null;
+
+    const lobbies = this.props.lobbies.map(lobby => (
+      <Lobby data={lobby} key={lobby.id} showBtn joinLobby={this.props.joinLobby} />
+    ));
+
+    return (
+      <>
+        <div className={styles.Buttons}>
+          <Button color="primary" onClick={this.props.fetchLobbies}>
+            refresh
+          </Button>
+          <Button
+            color="secondary"
+            onClick={() => this.props.history.push('/main-menu')}
+          >
+            back
+          </Button>
+        </div>
+        <div className={styles.Lobbies}>{lobbies}</div>
+      </>
+    );
+  }
 }
 
-export default Lobbies;
+const mapStateToProps = state => {
+  return { lobbies: state.lobby.lobbies };
+};
+
+export default connect(mapStateToProps, { fetchLobbies, joinLobby })(Lobbies);
