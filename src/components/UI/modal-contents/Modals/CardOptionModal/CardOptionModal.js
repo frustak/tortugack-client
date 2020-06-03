@@ -25,7 +25,10 @@ function CardOptionModal({ options, slug, sendGameAction, handleModal }) {
     handleModal(false);
   };
 
-  if (options.length === 0) handleModal(false);
+  if (options.length === 0) {
+    handleModal(false);
+    sendGameAction('USE-EVENT-CARD', { eventCardToUse: slug });
+  }
 
   const output = options.map((option, index) => (
     <Button
