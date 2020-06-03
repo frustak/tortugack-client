@@ -36,7 +36,7 @@ class MainMenu extends React.Component {
           })}
           {this.renderButton({ text: 'sign out', color: 'secondary' }, () => {
             deleteToken();
-            this.props.history.push('/');
+            this.props.history.push('/login');
           })}
         </div>
       </div>
