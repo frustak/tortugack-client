@@ -5,6 +5,7 @@ import styles from './Game.module.css';
 import GameMap from './GameMap/GameMap';
 import GameAction from './GameAction/GameAction';
 import { startGamePolling, stopGamePolling } from '../../actions';
+import GameInfo from './GameInfo/GameInfo';
 
 class Game extends React.Component {
   componentDidMount() {
@@ -24,7 +25,7 @@ class Game extends React.Component {
           <GameMap />
           <GameAction />
         </div>
-        {/* <GameInfo /> */}
+        <GameInfo />
       </div>
     );
   }
