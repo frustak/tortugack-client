@@ -70,6 +70,7 @@ export const startLobbyPolling = () => async (dispatch, getState) => {
   dispatch(fetchLobby());
   const pollTimer = setInterval(async () => {
     await dispatch(fetchLobby());
+    if (getState().lobby.currentLobby.lobby.gameStarted) history.push('/game');
   }, POLL_TIME);
   dispatch({ type: START_LOBBY_POLLING, payload: pollTimer });
 };
