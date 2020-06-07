@@ -18,3 +18,4 @@ export const FETCH_GAME = 'FETCH_GAME';
 export const GAME_ACTION = 'GAME_ACTION';
 export const DISPLAY_LOADING = 'DISPLAY_LOADING';
 export const CLOSE_LOADING = 'CLOSE_LOADING';
+export const LEAVE_GAME = 'LEAVE_GAME';

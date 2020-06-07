@@ -25,6 +25,7 @@ import {
   GAME_ACTION,
   CLOSE_LOADING,
   DISPLAY_LOADING,
+  LEAVE_GAME,
 } from './types';
 import history from '../history';
 
@@ -65,9 +66,11 @@ export const joinLobby = lobbyId => async dispatch => {
   history.push('/full-lobby');
 };
 
-export const startLobbyPolling = () => async dispatch => {
+export const startLobbyPolling = () => async (dispatch, getState) => {
   dispatch(fetchLobby());
-  const pollTimer = setInterval(() => dispatch(fetchLobby()), POLL_TIME);
+  const pollTimer = setInterval(async () => {
+    await dispatch(fetchLobby());
+  }, POLL_TIME);
   dispatch({ type: START_LOBBY_POLLING, payload: pollTimer });
 };
 
@@ -180,4 +183,16 @@ export const displayLoading = () => {
 
 export const closeLoading = () => {
   return { type: CLOSE_LOADING };
+};
+
+export const leaveGame = () => async dispatch => {
+  tortuga.get('/game/leave');
+  history.push('/main-menu');
+  dispatch({ type: LEAVE_GAME });
+  dispatch(endGamePolling());
+};
+
+export const endGamePolling = () => (dispatch, getState) => {
+  clearInterval(getState().game.pollTimer);
+  dispatch({ type: STOP_GAME_POLLING });
 };

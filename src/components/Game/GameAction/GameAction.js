@@ -28,6 +28,7 @@ import RevealCardModal from '../../UI/modal-contents/Modals/RevealCardModal/Reve
 import VoteCardModal from '../../UI/modal-contents/VoteCardModal/VoteCardModal';
 import CardOptionModal from '../../UI/modal-contents/Modals/CardOptionModal/CardOptionModal';
 import MyEventsModal from '../../UI/modal-contents/Modals/MyEventsModal/MyEventsModal';
+import ForcePlayerChooseModal from '../../UI/modal-contents/Modals/ForcePlayerChooseModal/ForcePlayerChooseModal';
 
 const useStyles = makeStyles({
   root: {
@@ -75,6 +76,7 @@ function GameAction({ data, username, sendGameAction, handleModal }) {
         break;
       case 'force another player to choose card':
         icon = forceCardIcon;
+        click = () => handleModal(true, <ForcePlayerChooseModal />);
         break;
       case 'call for a mutiny':
         icon = mutinyIcon;

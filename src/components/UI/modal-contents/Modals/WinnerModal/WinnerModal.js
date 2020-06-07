@@ -2,9 +2,11 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Button, Paper } from '@material-ui/core';
 import _ from 'lodash';
-import britainFlag from '../../../assets/icons/britain-flag.png';
-import franceFlag from '../../../assets/icons/france-flag.png';
-import dutchFlag from '../../../assets/icons/dutch-flag.png';
+import britainFlag from '../../../../../assets/icons/britain-flag.png';
+import franceFlag from '../../../../../assets/icons/france-flag.png';
+import dutchFlag from '../../../../../assets/icons/dutch-flag.png';
+import { connect } from 'react-redux';
+import { leaveGame } from '../../../../../actions';
 
 const useStyles = makeStyles({
   container: {
@@ -42,7 +44,7 @@ const useStyles = makeStyles({
   },
 });
 
-function WinnerModal({ winner, leaveGameToMenu }) {
+function WinnerModal({ winner, leaveGame }) {
   const classes = useStyles();
   const { winnerTeam, playersTeams } = winner;
   let winnerPlayers = [];
@@ -82,7 +84,7 @@ function WinnerModal({ winner, leaveGameToMenu }) {
           className={classes.btn}
           variant="contained"
           color="primary"
-          onClick={leaveGameToMenu}
+          onClick={leaveGame}
         >
           Back to Menu
         </Button>
@@ -91,4 +93,8 @@ function WinnerModal({ winner, leaveGameToMenu }) {
   );
 }
 
-export default WinnerModal;
+const mapStateToProps = state => {
+  return { winner: state.game.data.gameStatus.winner };
+};
+
+export default connect(mapStateToProps, { leaveGame })(WinnerModal);

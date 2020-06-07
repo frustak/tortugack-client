@@ -32,6 +32,7 @@ function CardOptionModal({ options, slug, sendGameAction, handleModal }) {
 
   const output = options.map((option, index) => (
     <Button
+      key={option}
       className={classes.btn}
       variant="contained"
       color="primary"

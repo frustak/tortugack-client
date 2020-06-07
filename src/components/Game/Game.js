@@ -4,16 +4,26 @@ import { connect } from 'react-redux';
 import styles from './Game.module.css';
 import GameMap from './GameMap/GameMap';
 import GameAction from './GameAction/GameAction';
-import { startGamePolling, stopGamePolling } from '../../actions';
+import { startGamePolling, stopGamePolling, handleModal } from '../../actions';
 import GameInfo from './GameInfo/GameInfo';
+import WinnerModal from '../UI/modal-contents/Modals/WinnerModal/WinnerModal';
 
 class Game extends React.Component {
   componentDidMount() {
     this.props.startGamePolling();
+    if (this.props.gameData?.gameStatus?.winner) {
+      handleModal(true, <WinnerModal />);
+    }
   }
 
   componentWillUnmount() {
     this.props.stopGamePolling();
+  }
+
+  componentDidUpdate() {
+    if (this.props.gameData?.gameStatus?.winner) {
+      handleModal(true, <WinnerModal />);
+    }
   }
 
   render() {
@@ -38,4 +48,5 @@ const mapStateToProps = state => {
 export default connect(mapStateToProps, {
   startGamePolling,
   stopGamePolling,
+  handleModal,
 })(Game);
