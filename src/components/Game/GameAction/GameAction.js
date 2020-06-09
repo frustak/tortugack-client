@@ -23,12 +23,12 @@ import PutChestModal from '../../UI/modal-contents/Modals/PutChestModal/PutChest
 import MaroonModal from '../../UI/modal-contents/Modals/MaroonModal/MaroonModal';
 import MoveModal from '../../UI/modal-contents/Modals/MoveModal/MoveModal';
 import MoveChestModal from '../../UI/modal-contents/Modals/MoveChestModal/MoveChestModal';
-import TwoEventCardsModal from '../../UI/modal-contents/Modals/TwoEventCardsModal/TwoEventCardsModal';
 import RevealCardModal from '../../UI/modal-contents/Modals/RevealCardModal/RevealCardModal';
 import VoteCardModal from '../../UI/modal-contents/VoteCardModal/VoteCardModal';
 import CardOptionModal from '../../UI/modal-contents/Modals/CardOptionModal/CardOptionModal';
 import MyEventsModal from '../../UI/modal-contents/Modals/MyEventsModal/MyEventsModal';
 import ForcePlayerChooseModal from '../../UI/modal-contents/Modals/ForcePlayerChooseModal/ForcePlayerChooseModal';
+import ViewTwoEventCardsModal from '../../UI/modal-contents/ViewTwoEventCardsModal/ViewTwoEventCardsModal';
 
 const useStyles = makeStyles({
   root: {
@@ -67,7 +67,7 @@ function GameAction({ data, username, sendGameAction, handleModal }) {
         icon = voteCardIcon;
         break;
       case 'view two event cards':
-        click = () => handleModal(true, <TwoEventCardsModal />);
+        click = () => handleModal(true, <ViewTwoEventCardsModal />);
         icon = twoEventIcon;
         break;
       case 'reveal one event card':

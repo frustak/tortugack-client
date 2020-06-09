@@ -11,11 +11,7 @@ const useStyles = makeStyles({
   },
 });
 
-function RevealCardModal({
-  eventCardsDeckCount,
-  sendGameAction,
-  showLastRevealedCard,
-}) {
+function RevealCardModal({ eventCardsDeckCount, sendGameAction, showLastRevealedCard }) {
   const classes = useStyles();
 
   const cardClickHandler = async eventCardIndex => {
@@ -24,11 +20,7 @@ function RevealCardModal({
   };
 
   const output = _.range(eventCardsDeckCount).map(index => (
-    <HiddenEventCard
-      key={index}
-      index={index}
-      cardClickHandler={cardClickHandler}
-    />
+    <HiddenEventCard key={index} index={index} cardClickHandler={cardClickHandler} />
   ));
 
   return <div className={classes.row}>{output}</div>;
@@ -36,7 +28,7 @@ function RevealCardModal({
 
 const mapStateToProps = state => {
   return {
-    eventCardsDeckCount: state.game.data.gameStatus.eventCardsDeckCount,
+    eventCardsDeckCount: state.game.data.gameStatus.eventCardsDeck.count,
   };
 };
 

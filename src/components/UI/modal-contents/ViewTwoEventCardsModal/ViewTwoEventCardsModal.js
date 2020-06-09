@@ -3,9 +3,9 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
-import EventCard from '../../ViewTwoEventCardsModal/EventCard';
-import { sendGameAction, handleModal } from '../../../../../actions';
-import RevealedEventCardsModal from '../../RevealedEventCardsModal/RevealedEventCardsModal';
+import EventCard from './EventCard';
+import { sendGameAction, handleModal } from '../../../../actions';
+import RevealedEventCardsModal from '../RevealedEventCardsModal/RevealedEventCardsModal';
 
 const useStyles = makeStyles({
   root: {
@@ -24,7 +24,7 @@ const useStyles = makeStyles({
   },
 });
 
-function ForceRevealCardModal({ eventCardsDeckCount, sendGameAction, handleModal, forcedPlayer }) {
+function ViewTwoEventCardsModal({ eventCardsDeckCount, sendGameAction, handleModal }) {
   const classes = useStyles();
   const [selectedCards, setSelectedCards] = useState([]);
 
@@ -41,11 +41,10 @@ function ForceRevealCardModal({ eventCardsDeckCount, sendGameAction, handleModal
 
   const onConfirmClick = async () => {
     selectedCards.sort();
-    await sendGameAction('force another player to choose card', {
-      forcedPlayer,
+    await sendGameAction('view two event cards', {
       eventCardsIndexes: selectedCards,
     });
-    handleModal(false);
+    handleModal(true, <RevealedEventCardsModal />);
   };
 
   const eventCards = _.range(eventCardsDeckCount).map(cardIndex => {
@@ -82,4 +81,4 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps, { sendGameAction, handleModal })(ForceRevealCardModal);
+export default connect(mapStateToProps, { sendGameAction, handleModal })(ViewTwoEventCardsModal);

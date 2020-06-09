@@ -27,10 +27,7 @@ function MaroonModal(props) {
   const classes = useStyles();
 
   const clickHandler = forcedPlayer => {
-    props.handleModal(
-      true,
-      <ForceRevealCardModal forcedPlayer={forcedPlayer} />
-    );
+    props.handleModal(true, <ForceRevealCardModal forcedPlayer={forcedPlayer} />);
   };
 
   const output = _.keys(props.data.playersPosition)

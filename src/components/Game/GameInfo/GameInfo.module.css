@@ -1,10 +1,14 @@
 .GameInfo {
   display: flex;
-  margin-top: 8px;
   width: 794px;
   padding: 4px;
-  /* background-color: rgba(38, 50, 56, 0.5); */
-  backdrop-filter: blur(15px);
+}
+
+.infoPaper {
+  margin-top: 8px;
+  width: 794px;
+  background-color: rgba(242, 238, 203, 0.6);
+  border-radius: 1px;
 }
 
 .Player_1 {

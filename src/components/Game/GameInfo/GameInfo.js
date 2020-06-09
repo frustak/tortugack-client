@@ -26,22 +26,22 @@ function GameInfo({ data, username }) {
   });
 
   return (
-    <div className={styles.GameInfo}>
-      <div className={styles.col}>
-        <span>Name</span>
-        <span>Team </span>
-        <span>Role </span>
-        <span>Turn</span>
-        <span>Players</span>
-      </div>
-      <div className={styles.col}>
-        <span className={userColor}>{username}</span>
-        <span>{data.playerGameInfo.team}</span>
-        <span>
-          {data.playerGameInfo.role ? data.playerGameInfo.role : 'not defined'}
-        </span>
-        <span className={hostColor}>{data.turn.username}</span>
-        <span className={styles.row}>{players}</span>
+    <div className={styles.infoPaper}>
+      <div className={styles.GameInfo}>
+        <div className={styles.col}>
+          <span>Name</span>
+          <span>Team </span>
+          <span>Role </span>
+          <span>Turn</span>
+          <span>Players</span>
+        </div>
+        <div className={styles.col}>
+          <span className={userColor}>{username}</span>
+          <span>{data.playerGameInfo.team}</span>
+          <span>{data.playerGameInfo.role ? data.playerGameInfo.role : 'not defined'}</span>
+          <span className={hostColor}>{data.turn.username}</span>
+          <span className={styles.row}>{players}</span>
+        </div>
       </div>
     </div>
   );

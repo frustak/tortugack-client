@@ -20,6 +20,12 @@ const useStyles = makeStyles({
   placeHolder: {
     height: 36,
   },
+  title: {
+    fontSize: 'large',
+  },
+  description: {
+    fontSize: 'medium',
+  },
 });
 
 function TwoEventCardsModal(props) {
