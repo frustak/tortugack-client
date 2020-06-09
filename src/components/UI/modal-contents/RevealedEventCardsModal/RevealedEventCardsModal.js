@@ -8,7 +8,7 @@ import RevealedEventCard from './RevealedEventCard';
 const useStyles = makeStyles({
   list: {
     display: 'flex',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
     width: '150vh',
   },
 });

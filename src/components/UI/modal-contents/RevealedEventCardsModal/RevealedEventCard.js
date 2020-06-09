@@ -9,6 +9,7 @@ const useStyles = makeStyles({
     height: '400px',
     overflow: 'auto',
     padding: '8px',
+    margin: '8px',
   },
 });
 
