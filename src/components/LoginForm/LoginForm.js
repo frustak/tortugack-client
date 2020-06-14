@@ -12,6 +12,14 @@ const useStyles = makeStyles({
   root: {
     marginBottom: '8px',
   },
+  howToPlayButton: {
+    marginTop: '8px',
+    backgroundColor: '#4CAF50',
+    color: 'white',
+    '&:hover': {
+      backgroundColor: '#388E3C',
+    },
+  },
 });
 
 function LoginForm({ login }) {
@@ -23,19 +31,17 @@ function LoginForm({ login }) {
 
   const renderInput = ({ input }) => {
     return (
-      <>
-        <TextField
-          {...input}
-          type="text"
-          autoFocus
-          onKeyUp={enterKeyPress}
-          variant="outlined"
-          label="Username"
-          color="primary"
-          className={classes.root}
-          autoComplete="off"
-        />
-      </>
+      <TextField
+        {...input}
+        type="text"
+        autoFocus
+        onKeyUp={enterKeyPress}
+        variant="outlined"
+        label="Username"
+        color="primary"
+        className={classes.root}
+        autoComplete="off"
+      />
     );
   };
 
@@ -48,6 +54,15 @@ function LoginForm({ login }) {
         <Button variant="contained" color="primary" onClick={login}>
           login
         </Button>
+        <a
+          href="https://drive.google.com/file/d/1ZGTgv-DnrvkOPpo4QPzqe13VMsWhH51b/view?usp=sharing"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <Button className={classes.howToPlayButton} variant="contained" color="default">
+            Don't know how to play?
+          </Button>
+        </a>
       </div>
     </div>
   );
