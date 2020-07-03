@@ -66,7 +66,7 @@ function ViewTwoEventCardsModal({ eventCardsDeckCount, sendGameAction, handleMod
         className={classes.confirmButton}
         variant="contained"
         color="primary"
-        disabled={selectedCards.length !== 2}
+        disabled={selectedCards.length !== 2 && eventCardsDeckCount > 1}
         onClick={onConfirmClick}
       >
         CONFIRM
