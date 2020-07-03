@@ -188,6 +188,7 @@ export const closeLoading = () => {
 
 export const leaveGame = () => async dispatch => {
   tortuga.get('/game/leave');
+  dispatch(handleModal(false));
   history.push('/main-menu');
   dispatch({ type: LEAVE_GAME });
   dispatch(endGamePolling());

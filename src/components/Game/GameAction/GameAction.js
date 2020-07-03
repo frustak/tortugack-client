@@ -124,7 +124,7 @@ function GameAction({ data, username, sendGameAction, handleModal }) {
   );
 
   let myEventCardsButton = null;
-  if (data.playerGameInfo.eventCards.length > 0) {
+  if (data?.playerGameInfo?.eventCards?.length > 0) {
     myEventCardsButton = (
       <Button
         variant="outlined"
@@ -153,6 +153,4 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps, { sendGameAction, handleModal })(
-  GameAction
-);
+export default connect(mapStateToProps, { sendGameAction, handleModal })(GameAction);

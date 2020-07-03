@@ -12,7 +12,7 @@ class Game extends React.Component {
   componentDidMount() {
     this.props.startGamePolling();
     if (this.props.gameData?.gameStatus?.winner) {
-      handleModal(true, <WinnerModal />);
+      this.props.handleModal(true, <WinnerModal />);
     }
   }
 
@@ -21,8 +21,9 @@ class Game extends React.Component {
   }
 
   componentDidUpdate() {
+    console.log(this.props);
     if (this.props.gameData?.gameStatus?.winner) {
-      handleModal(true, <WinnerModal />);
+      this.props.handleModal(true, <WinnerModal />);
     }
   }
 
