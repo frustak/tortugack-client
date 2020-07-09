@@ -1,66 +1,68 @@
-import React from 'react';
-import Lobby from '../Lobbies/Lobby/Lobby';
-import Button from '@material-ui/core/Button';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
+import Button from '@material-ui/core/Button';
 
 import styles from './FullLobby.module.css';
+import { startGame } from '../../actions/gameActions/gameActions';
 import {
-  startLobbyPolling,
   leaveLobby,
-  endLobbyPolling,
+  startLobbyPolling,
+  stopLobbyPolling,
+} from '../../actions/lobbyActions/lobbyActions';
+import Lobby from '../Lobbies/Lobby/Lobby';
+
+function FullLobby({
+  lobbyData,
+  startLobbyPolling,
+  stopLobbyPolling,
   startGame,
-} from '../../actions';
+  leaveLobby,
+}) {
+  useEffect(() => {
+    startLobbyPolling();
+    return stopLobbyPolling;
+  }, [startLobbyPolling, stopLobbyPolling]);
 
-class FullLobby extends React.Component {
-  componentDidMount() {
-    this.props.startLobbyPolling();
-  }
+  const renderButton = () => {
+    return lobbyData.canStart ? (
+      <Button
+        variant="outlined"
+        color="primary"
+        onClick={startGame}
+        className={styles.button}
+      >
+        start
+      </Button>
+    ) : null;
+  };
 
-  componentWillUnmount() {
-    this.props.endLobbyPolling();
-  }
+  if (!lobbyData || !lobbyData.lobby) return null;
 
-  render() {
-    if (!this.props.lobbyData || !this.props.lobbyData.lobby) return null;
-
-    let output = null;
-    if (this.props.lobbyData.canStart) {
-      output = (
-        <Button
-          variant="outlined"
-          color="primary"
-          onClick={this.props.startGame}
-          className={styles.Button}
-        >
-          start
-        </Button>
-      );
-    }
-
-    return (
-      <div className={styles.FullLobby}>
-        <Lobby data={this.props.lobbyData.lobby} />
-        {output}
-        <Button
-          variant="outlined"
-          color="secondary"
-          onClick={this.props.leaveLobby}
-          className={styles.Button}
-        >
-          leave
-        </Button>
-      </div>
-    );
-  }
+  return (
+    <div className={styles.fullLobby}>
+      <Lobby data={lobbyData.lobby} />
+      {renderButton()}
+      <Button
+        variant="outlined"
+        color="secondary"
+        onClick={leaveLobby}
+        className={styles.button}
+      >
+        leave
+      </Button>
+    </div>
+  );
 }
 
 const mapStateToProps = state => {
-  return { lobbyData: state.lobby.currentLobby };
+  return {
+    lobbyData: state.lobby.currentLobby,
+  };
 };
 
 export default connect(mapStateToProps, {
   startLobbyPolling,
   leaveLobby,
-  endLobbyPolling,
+  stopLobbyPolling,
   startGame,
 })(FullLobby);

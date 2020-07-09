@@ -1,4 +1,4 @@
-.Cell {
+.cell {
   position: fixed;
   width: 30px;
   height: 30px;
@@ -9,49 +9,49 @@
   justify-content: center;
 }
 
-.Player_1 {
+.player_1 {
   background-color: #2196f3;
   color: white;
 }
-.Player_2 {
+.player_2 {
   background-color: #4caf50;
   color: white;
 }
-.Player_3 {
+.player_3 {
   background-color: #f44336;
   color: #111111;
 }
-.Player_4 {
+.player_4 {
   background-color: #ff9800;
   color: #111111;
 }
-.Player_5 {
+.player_5 {
   background-color: #795548;
   color: white;
 }
-.Player_6 {
+.player_6 {
   background-color: #9c27b0;
   color: white;
 }
-.Player_7 {
+.player_7 {
   background-color: #ffeb3b;
   color: #111111;
 }
-.Player_8 {
+.player_8 {
   background-color: #263238;
   color: white;
 }
-.Player_9 {
+.player_9 {
   background-color: #9e9e9e;
   color: #111111;
 }
 
-.Image {
+.image {
   width: 30px;
   height: 30px;
 }
 
-.Chest {
+.chest {
   color: white;
   font-size: x-small;
 }

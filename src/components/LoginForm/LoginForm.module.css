@@ -1,4 +1,4 @@
-.LoginForm {
+.loginForm {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -6,12 +6,12 @@
   margin-top: 128px;
 }
 
-.LoginForm .content {
+.loginForm .content {
   display: flex;
   flex-direction: column;
 }
 
-.LoginForm h1 {
+.loginForm h1 {
   font-family: 'Bad Script', cursive;
   font-size: xx-large;
 }

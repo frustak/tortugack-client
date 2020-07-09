@@ -1,14 +1,13 @@
 import { combineReducers } from 'redux';
-import { reducer as formReducer } from 'redux-form';
-import errorReducer from './errorReducer';
-import userReducer from './userReducer';
-import lobbyReducer from './lobbyReducer';
-import modalReducer from './modalReducer';
-import gameReducer from './gameReducer';
-import loadingReducer from './loadingReducer';
+
+import errorReducer from './errorReducer/errorReducer';
+import userReducer from './userReducer/userReducer';
+import lobbyReducer from './lobbyReducer/lobbyReducer';
+import modalReducer from './modalReducer/modalReducer';
+import gameReducer from './gameReducer/gameReducer';
+import loadingReducer from './loadingReducer/loadingReducer';
 
 export default combineReducers({
-  form: formReducer,
   error: errorReducer,
   user: userReducer,
   lobby: lobbyReducer,

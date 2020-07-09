@@ -1,8 +1,9 @@
 import React from 'react';
-import gameMap from '../../../assets/map.jpg';
-import Cell from './Cell/Cell';
 import _ from 'lodash';
 import { connect } from 'react-redux';
+
+import gameMap from '../../../assets/map.jpg';
+import Cell from './Cell/Cell';
 
 const cells = {
   fd: {
@@ -49,7 +50,7 @@ function GameMap({ playersPosition, chestsPosition }) {
     const [land, place] = value.split('_');
     const position = cells[land][place];
     output.push(
-      <Cell player={key} position={position} key={key} color={`Player_${i}`} />
+      <Cell player={key} position={position} key={key} color={`player_${i}`} />
     );
     i++;
   });
@@ -58,7 +59,7 @@ function GameMap({ playersPosition, chestsPosition }) {
     const [land, place] = key.split('_');
     let position = cells[land][place];
     output.push(
-      <Cell player={value} position={position} key={key} color="Chest" />
+      <Cell player={value} position={position} key={key} color="chest" />
     );
   });
 

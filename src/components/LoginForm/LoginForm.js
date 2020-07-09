@@ -1,12 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { connect } from 'react-redux';
+import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import { makeStyles } from '@material-ui/core/styles';
-import { Field, reduxForm } from 'redux-form';
-import { connect } from 'react-redux';
+
+import { loginUser } from '../../actions/userActions/userActions';
 import styles from './LoginForm.module.css';
 import skull from '../../assets/skull.png';
-import { login } from '../../actions';
 
 const useStyles = makeStyles({
   root: {
@@ -22,36 +22,32 @@ const useStyles = makeStyles({
   },
 });
 
-function LoginForm({ login }) {
+function LoginForm({ loginUser }) {
+  const [input, setInput] = useState('');
   const classes = useStyles();
 
-  const enterKeyPress = event => {
-    if (event.key === 'Enter') login();
-  };
-
-  const renderInput = ({ input }) => {
-    return (
-      <TextField
-        {...input}
-        type="text"
-        autoFocus
-        onKeyUp={enterKeyPress}
-        variant="outlined"
-        label="Username"
-        color="primary"
-        className={classes.root}
-        autoComplete="off"
-      />
-    );
+  const onSubmit = e => {
+    e.preventDefault();
+    if (input) loginUser(input);
   };
 
   return (
-    <div className={styles.LoginForm}>
+    <div className={styles.loginForm}>
       <img src={skull} alt="skull icon" className={styles.skull} />
       <h1>Tortugack Online Board Game</h1>
-      <div className={styles.content}>
-        <Field name="username" component={renderInput} />
-        <Button variant="contained" color="primary" onClick={login}>
+      <form className={styles.content} onSubmit={onSubmit}>
+        <TextField
+          value={input}
+          onChange={e => setInput(e.target.value)}
+          type="text"
+          autoFocus
+          variant="outlined"
+          label="Username"
+          color="primary"
+          className={classes.root}
+          autoComplete="off"
+        />
+        <Button variant="contained" color="primary" type="submit">
           login
         </Button>
         <a
@@ -63,10 +59,9 @@ function LoginForm({ login }) {
             Don't know how to play?
           </Button>
         </a>
-      </div>
+      </form>
     </div>
   );
 }
 
-const wrappedForm = reduxForm({ form: 'loginForm' })(LoginForm);
-export default connect(null, { login })(wrappedForm);
+export default connect(null, { loginUser })(LoginForm);

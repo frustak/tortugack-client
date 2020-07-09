@@ -1,14 +1,15 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
-import { connect } from 'react-redux';
 
+import { hideModal } from '../../actions/modalActions/modalActions';
 import styles from './ModalView.module.css';
-import { handleModal } from '../../actions';
+import renderModalContent from './renderModalContent';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles(() => ({
   modal: {
     display: 'flex',
     alignItems: 'center',
@@ -16,7 +17,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-function ModalView({ isOpen, handleModal, content }) {
+function ModalView({ isOpen, type, data, hideModal }) {
   const classes = useStyles();
 
   return (
@@ -24,7 +25,7 @@ function ModalView({ isOpen, handleModal, content }) {
       <Modal
         className={classes.modal}
         open={isOpen}
-        onClose={() => handleModal(false)}
+        onClose={() => hideModal()}
         closeAfterTransition
         BackdropComponent={Backdrop}
         BackdropProps={{
@@ -32,7 +33,7 @@ function ModalView({ isOpen, handleModal, content }) {
         }}
       >
         <Fade in={isOpen}>
-          <div className={styles.MainModal}>{content}</div>
+          <div className={styles.mainModal}>{renderModalContent(type, data)}</div>
         </Fade>
       </Modal>
     </div>
@@ -40,7 +41,11 @@ function ModalView({ isOpen, handleModal, content }) {
 }
 
 const mapStateToProps = state => {
-  return { isOpen: state.modal.isOpen, content: state.modal.content };
+  return {
+    isOpen: state.modal.isOpen,
+    type: state.modal.type,
+    data: state.modal.data,
+  };
 };
 
-export default connect(mapStateToProps, { handleModal })(ModalView);
+export default connect(mapStateToProps, { hideModal })(ModalView);

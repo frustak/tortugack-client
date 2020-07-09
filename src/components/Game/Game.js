@@ -1,53 +1,44 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 
+import * as modalTypes from '../../constants/modalTypes';
+import { startGamePolling, stopGamePolling } from '../../actions/gameActions/gameActions';
+import { showModal } from '../../actions/modalActions/modalActions';
 import styles from './Game.module.css';
 import GameMap from './GameMap/GameMap';
 import GameAction from './GameAction/GameAction';
-import { startGamePolling, stopGamePolling, handleModal } from '../../actions';
 import GameInfo from './GameInfo/GameInfo';
-import WinnerModal from '../UI/modal-contents/Modals/WinnerModal/WinnerModal';
 
-class Game extends React.Component {
-  componentDidMount() {
-    this.props.startGamePolling();
-    if (this.props.gameData?.gameStatus?.winner) {
-      this.props.handleModal(true, <WinnerModal />);
-    }
-  }
+function Game({ gameData, startGamePolling, stopGamePolling, showModal }) {
+  useEffect(() => {
+    startGamePolling();
+    return stopGamePolling;
+  }, [startGamePolling, stopGamePolling]);
 
-  componentWillUnmount() {
-    this.props.stopGamePolling();
-  }
+  useEffect(() => {
+    if (gameData?.gameStatus?.winner) showModal(modalTypes.WINNER_MODAL);
+  });
 
-  componentDidUpdate() {
-    console.log(this.props);
-    if (this.props.gameData?.gameStatus?.winner) {
-      this.props.handleModal(true, <WinnerModal />);
-    }
-  }
-
-  render() {
-    if (!this.props.gameData) return null;
-
-    return (
-      <div className={styles.Game}>
-        <div className={styles.row}>
-          <GameMap />
-          <GameAction />
-        </div>
-        <GameInfo />
+  if (!gameData) return null;
+  return (
+    <div className={styles.game}>
+      <div className={styles.row}>
+        <GameMap />
+        <GameAction />
       </div>
-    );
-  }
+      <GameInfo />
+    </div>
+  );
 }
 
 const mapStateToProps = state => {
-  return { gameData: state.game.data };
+  return {
+    gameData: state.game.data,
+  };
 };
 
 export default connect(mapStateToProps, {
   startGamePolling,
   stopGamePolling,
-  handleModal,
+  showModal,
 })(Game);

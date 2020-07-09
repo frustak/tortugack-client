@@ -1,8 +1,12 @@
 import React from 'react';
-import styles from './GameAction.module.css';
-import Button from '@material-ui/core/Button';
-import { makeStyles } from '@material-ui/styles';
 import { connect } from 'react-redux';
+import { makeStyles } from '@material-ui/styles';
+import Button from '@material-ui/core/Button';
+
+import * as modalTypes from '../../../constants/modalTypes';
+import { showModal } from '../../../actions/modalActions/modalActions';
+import { doGameAction } from '../../../actions/gameActions/gameActions';
+import styles from './GameAction.module.css';
 
 import moveIcon from '../../../assets/icons/move.png';
 import twoEventIcon from '../../../assets/icons/two-cards.png';
@@ -12,23 +16,11 @@ import mutinyIcon from '../../../assets/icons/mutiny.png';
 import brawlIcon from '../../../assets/icons/brawl.png';
 import attackIcon from '../../../assets/icons/attack.png';
 import maroonIcon from '../../../assets/icons/maroon.png';
-import moveChestIcon from '../../../assets/icons/move-chest.png';
-import voteCardIcon from '../../../assets/icons/vote-card.png';
-import useCardIcon from '../../../assets/icons/use-card.png';
-import keepCardIcon from '../../../assets/icons/keep-card.png';
+import putChestIcon from '../../../assets/icons/move-chest.png';
+import voteIcon from '../../../assets/icons/vote-card.png';
+import useEventIcon from '../../../assets/icons/use-card.png';
+import keepEventIcon from '../../../assets/icons/keep-card.png';
 import eventCardsIcon from '../../../assets/icons/event-cards.png';
-import { sendGameAction, handleModal } from '../../../actions';
-
-import PutChestModal from '../../UI/modal-contents/Modals/PutChestModal/PutChestModal';
-import MaroonModal from '../../UI/modal-contents/Modals/MaroonModal/MaroonModal';
-import MoveModal from '../../UI/modal-contents/Modals/MoveModal/MoveModal';
-import MoveChestModal from '../../UI/modal-contents/Modals/MoveChestModal/MoveChestModal';
-import RevealCardModal from '../../UI/modal-contents/Modals/RevealCardModal/RevealCardModal';
-import VoteCardModal from '../../UI/modal-contents/VoteCardModal/VoteCardModal';
-import CardOptionModal from '../../UI/modal-contents/Modals/CardOptionModal/CardOptionModal';
-import MyEventsModal from '../../UI/modal-contents/Modals/MyEventsModal/MyEventsModal';
-import ForcePlayerChooseModal from '../../UI/modal-contents/Modals/ForcePlayerChooseModal/ForcePlayerChooseModal';
-import ViewTwoEventCardsModal from '../../UI/modal-contents/ViewTwoEventCardsModal/ViewTwoEventCardsModal';
 
 const useStyles = makeStyles({
   root: {
@@ -38,45 +30,57 @@ const useStyles = makeStyles({
   },
 });
 
-function GameAction({ data, username, sendGameAction, handleModal }) {
+function GameAction({ data, doGameAction, showModal }) {
   const classes = useStyles();
 
   const output = data.playerGameInfo.availableActions.map((action, index) => {
     let icon;
-    let click = () => sendGameAction(action);
+    let click = () => doGameAction(action);
 
     switch (action) {
       case 'put chest':
-        icon = moveChestIcon;
-        click = () => handleModal(true, <PutChestModal />);
+        icon = putChestIcon;
+        click = () => showModal(modalTypes.PUT_CHEST_MODAL);
         break;
       case 'maroon any crew mate to tortuga':
-        click = () => handleModal(true, <MaroonModal />);
         icon = maroonIcon;
+        click = () => showModal(modalTypes.MAROON_MODAL);
         break;
       case 'move':
-        click = () => handleModal(true, <MoveModal />);
         icon = moveIcon;
+        click = () => showModal(modalTypes.MOVE_MODAL);
         break;
       case 'move treasure':
-        click = () => handleModal(true, <MoveChestModal />);
-        icon = moveChestIcon;
+        icon = putChestIcon;
+        click = () => showModal(modalTypes.MOVE_CHEST_MODAL);
         break;
       case 'vote':
-        click = () => handleModal(true, <VoteCardModal clickable />);
-        icon = voteCardIcon;
+        icon = voteIcon;
+        click = () => showModal(modalTypes.VOTE_CARD_MODAL);
         break;
       case 'view two event cards':
-        click = () => handleModal(true, <ViewTwoEventCardsModal />);
         icon = twoEventIcon;
+        click = () => showModal(modalTypes.VIEW_TWO_EVENT_CARDS_MODAL);
         break;
       case 'reveal one event card':
-        click = () => handleModal(true, <RevealCardModal />);
         icon = cardIcon;
+        click = () => showModal(modalTypes.REVEAL_CARD_MODAL);
         break;
       case 'force another player to choose card':
         icon = forceCardIcon;
-        click = () => handleModal(true, <ForcePlayerChooseModal />);
+        click = () => showModal(modalTypes.FORCE_PLAYER_CHOOSE_MODAL);
+        break;
+      case 'USE-EVENT-CARD':
+        icon = useEventIcon;
+        click = async () => {
+          await doGameAction('SEE-EVENT-CARD-OPTIONS', {
+            eventCardToSeeSlug: data.lastAction.actionData.eventCard.slug,
+          });
+          showModal(modalTypes.CARD_OPTION_MODAL);
+        };
+        break;
+      case 'KEEP-EVENT-CARD':
+        icon = keepEventIcon;
         break;
       case 'call for a mutiny':
         icon = mutinyIcon;
@@ -87,63 +91,47 @@ function GameAction({ data, username, sendGameAction, handleModal }) {
       case 'call for brawl':
         icon = brawlIcon;
         break;
-      case 'USE-EVENT-CARD':
-        icon = useCardIcon;
-
-        click = async () => {
-          await sendGameAction('SEE-EVENT-CARD-OPTIONS', {
-            eventCardToSeeSlug: data.lastAction.actionData.eventCard.slug,
-          });
-          handleModal(true, <CardOptionModal />);
-        };
-
-        break;
-      case 'KEEP-EVENT-CARD':
-        icon = keepCardIcon;
-        break;
       default:
+        return null;
     }
 
     return (
-      <Button variant="outlined" onClick={click} key={index} classes={classes}>
+      <Button variant="outlined" onClick={click} key={action} classes={classes}>
         {action}
-        <img src={icon} alt="" className={styles.Icon} />
+        <img src={icon} alt="" className={styles.icon} />
       </Button>
     );
   });
 
-  const voteCardsButton = (
-    <Button
-      variant="outlined"
-      classes={classes}
-      onClick={() => handleModal(true, <VoteCardModal />)}
-    >
-      view my vote cards
-      <img src={voteCardIcon} alt="" className={styles.Icon} />
-    </Button>
-  );
-
-  let myEventCardsButton = null;
-  if (data?.playerGameInfo?.eventCards?.length > 0) {
-    myEventCardsButton = (
+  if (!data.playerGameInfo.availableActions.some(action => action === 'vote')) {
+    output.push(
       <Button
         variant="outlined"
         classes={classes}
-        onClick={() => handleModal(true, <MyEventsModal />)}
+        key="view-my-vote-cards"
+        onClick={() => showModal(modalTypes.MY_VOTE_CARDS_MODAL)}
       >
-        view my event cards
-        <img src={eventCardsIcon} alt="" className={styles.Icon} />
+        view my vote cards
+        <img src={voteIcon} alt="" className={styles.icon} />
       </Button>
     );
   }
 
-  return (
-    <div className={styles.GameAction}>
-      {output}
-      {voteCardsButton}
-      {myEventCardsButton}
-    </div>
-  );
+  if (data?.playerGameInfo?.eventCards?.length > 0) {
+    output.push(
+      <Button
+        key="view-my-event-cards"
+        variant="outlined"
+        classes={classes}
+        onClick={() => showModal(modalTypes.MY_EVENTS_MODAL)}
+      >
+        view my event cards
+        <img src={eventCardsIcon} alt="" className={styles.icon} />
+      </Button>
+    );
+  }
+
+  return <div className={styles.gameAction}>{output}</div>;
 }
 
 const mapStateToProps = state => {
@@ -153,4 +141,7 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps, { sendGameAction, handleModal })(GameAction);
+export default connect(mapStateToProps, {
+  doGameAction,
+  showModal,
+})(GameAction);

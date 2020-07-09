@@ -1,27 +1,28 @@
 import React from 'react';
+
 import styles from './Cell.module.css';
 import chestIcon from '../../../../assets/icons/chest.png';
 
-function Cell(props) {
-  const classes = [styles.Cell, styles[props.color]];
+function Cell({ color, position, player }) {
+  const classes = [styles.cell, styles[color]].join(' ');
 
-  if (props.color !== 'Chest') {
+  if (color !== 'chest') {
     return (
       <div
-        className={classes.join(' ')}
-        style={{ left: props.position.x - 16, top: props.position.y - 16 }}
+        className={classes}
+        style={{ left: position.x - 16, top: position.y - 16 }}
       >
-        {props.player}
+        {player}
       </div>
     );
   } else {
     return (
       <div
-        className={classes.join(' ')}
-        style={{ left: props.position.x - 16, top: props.position.y - 16 }}
+        className={classes}
+        style={{ left: position.x - 16, top: position.y - 16 }}
       >
-        <img className={styles.Image} src={chestIcon} alt="" />
-        {props.player}
+        <img className={styles.image} src={chestIcon} alt="" />
+        {player}
       </div>
     );
   }

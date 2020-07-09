@@ -1,22 +1,22 @@
-.MainMenu {
+.mainMenu {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
 
-.MainMenu .Content {
+.mainMenu .content {
   text-align: center;
   display: flex;
   flex-direction: column;
   width: 200px;
 }
 
-.MainMenu .Content * {
+.mainMenu .content * {
   margin: 2px;
 }
 
-.MainMenu .Content p {
+.mainMenu .content p {
   margin: 16px 0;
   color: white;
   background-color: #263238;

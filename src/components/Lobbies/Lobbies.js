@@ -1,44 +1,41 @@
-import React from 'react';
-import Button from '@material-ui/core/Button';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
+import Button from '@material-ui/core/Button';
 
-import Lobby from './Lobby/Lobby';
+import { fetchLobbies, joinLobby } from '../../actions/lobbyActions/lobbyActions';
 import styles from './Lobbies.module.css';
-import { fetchLobbies, joinLobby } from '../../actions';
+import Lobby from './Lobby/Lobby';
 
-class Lobbies extends React.Component {
-  componentDidMount() {
-    this.props.fetchLobbies();
-  }
+function Lobbies({ history, lobbies, fetchLobbies, joinLobby }) {
+  useEffect(() => {
+    fetchLobbies();
+  }, [fetchLobbies]);
 
-  render() {
-    if (!this.props.lobbies) return null;
-
-    const lobbies = this.props.lobbies.map(lobby => (
-      <Lobby data={lobby} key={lobby.id} showBtn joinLobby={this.props.joinLobby} />
+  const renderLobbies = () => {
+    return lobbies?.map(lobby => (
+      <Lobby data={lobby} key={lobby.id} showBtn joinLobby={joinLobby} />
     ));
+  };
 
-    return (
-      <>
-        <div className={styles.Buttons}>
-          <Button color="primary" onClick={this.props.fetchLobbies}>
-            refresh
-          </Button>
-          <Button
-            color="secondary"
-            onClick={() => this.props.history.push('/main-menu')}
-          >
-            back
-          </Button>
-        </div>
-        <div className={styles.Lobbies}>{lobbies}</div>
-      </>
-    );
-  }
+  return (
+    <>
+      <div className={styles.Buttons}>
+        <Button color="primary" onClick={fetchLobbies}>
+          refresh
+        </Button>
+        <Button color="secondary" onClick={() => history.push('/main-menu')}>
+          back
+        </Button>
+      </div>
+      <div className={styles.Lobbies}>{renderLobbies()}</div>
+    </>
+  );
 }
 
 const mapStateToProps = state => {
-  return { lobbies: state.lobby.lobbies };
+  return {
+    lobbies: state.lobby.lobbies,
+  };
 };
 
 export default connect(mapStateToProps, { fetchLobbies, joinLobby })(Lobbies);
