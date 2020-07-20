@@ -8,6 +8,7 @@ import styles from './Game.module.css';
 import GameMap from './GameMap/GameMap';
 import GameAction from './GameAction/GameAction';
 import GameInfo from './GameInfo/GameInfo';
+import GameActivity from './GameActivity/GameActivity';
 
 function Game({ gameData, startGamePolling, stopGamePolling, showModal }) {
   useEffect(() => {
@@ -24,6 +25,7 @@ function Game({ gameData, startGamePolling, stopGamePolling, showModal }) {
     <div className={styles.game}>
       <div className={styles.row}>
         <GameMap />
+        <GameActivity />
         <GameAction />
       </div>
       <GameInfo />
