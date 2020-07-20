@@ -1,3 +1,5 @@
+import _ from 'lodash';
+
 import * as types from '../../constants/actionTypes';
 import api from '../../apis/api';
 import history from '../../history';
@@ -56,5 +58,14 @@ export const stopGamePolling = () => (dispatch, getState) => {
   clearInterval(pollTimer);
   dispatch({
     type: types.GAME_STOP_POLLING,
+  });
+};
+
+export const setPlayers = () => (dispatch, getState) => {
+  const { playersPosition } = getState().game.data.gameStatus;
+  const players = _.keys(playersPosition);
+  dispatch({
+    type: types.GAME_SET_PLAYERS,
+    players,
   });
 };
