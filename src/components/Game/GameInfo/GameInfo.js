@@ -1,13 +1,18 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import _ from 'lodash';
 import { connect } from 'react-redux';
 
+import { playSound } from '../../../helpers/audioHelper';
 import britainFlag from '../../../assets/icons/britain-flag.png';
 import franceFlag from '../../../assets/icons/france-flag.png';
 import dutchFlag from '../../../assets/icons/dutch-flag.png';
 import styles from './GameInfo.module.css';
 
-function GameInfo({ data, username }) {
+function GameInfo({ data, username, players, turn }) {
+  useEffect(() => {
+    if (username === turn.username) playSound();
+  }, [username, turn.username]);
+
   let hostColor;
   let userColor;
 
@@ -25,7 +30,7 @@ function GameInfo({ data, username }) {
   };
 
   const renderPlayers = () => {
-    return _.keys(data.playersPosition).map((player, index) => {
+    return players.map((player, index) => {
       const style = styles[`Player_${index + 1}`];
       let output = player;
       if (data.turn.username === player) {
@@ -73,6 +78,8 @@ const mapStateToProps = state => {
   return {
     data: state.game.data.gameStatus,
     username: state.user.username,
+    players: state.game.players,
+    turn: state.game.data.gameStatus.turn,
   };
 };
 

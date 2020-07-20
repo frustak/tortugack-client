@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Router, Route, Switch } from 'react-router-dom';
 
+import { loadSounds } from '../../helpers/audioHelper';
 import history from '../../history';
 import { verifyUser, checkUserState } from '../../actions/userActions/userActions';
 import styles from './App.module.css';
@@ -15,6 +16,10 @@ import Warning from '../Warning/Warning';
 import Loading from '../Loading/Loading';
 
 function App({ isVerified, verifyUser, checkUserState }) {
+  useEffect(() => {
+    loadSounds();
+  }, []);
+
   useEffect(() => {
     verifyUser();
   }, [verifyUser]);

@@ -6,6 +6,7 @@ describe('game reducer', () => {
     expect(reducer(undefined, {})).toStrictEqual({
       data: null,
       pollTimer: null,
+      players: [],
     });
   });
 
@@ -17,6 +18,7 @@ describe('game reducer', () => {
     ).toStrictEqual({
       data: null,
       pollTimer: null,
+      players: [],
     });
   });
 
@@ -30,6 +32,7 @@ describe('game reducer', () => {
     ).toStrictEqual({
       data,
       pollTimer: null,
+      players: [],
     });
   });
 
@@ -41,6 +44,7 @@ describe('game reducer', () => {
     ).toStrictEqual({
       data: null,
       pollTimer: null,
+      players: [],
     });
   });
 
@@ -52,6 +56,7 @@ describe('game reducer', () => {
     ).toStrictEqual({
       data: null,
       pollTimer: null,
+      players: [],
     });
   });
 
@@ -65,6 +70,7 @@ describe('game reducer', () => {
     ).toStrictEqual({
       data: null,
       pollTimer: timer,
+      players: [],
     });
   });
 
@@ -76,6 +82,21 @@ describe('game reducer', () => {
     ).toStrictEqual({
       data: null,
       pollTimer: null,
+      players: [],
+    });
+  });
+
+  it(`should handle ${types.GAME_SET_PLAYERS}`, () => {
+    const players = ['DUMMY PLAYER 1', 'DUMMY PLAYER 2'];
+    expect(
+      reducer(undefined, {
+        type: types.GAME_SET_PLAYERS,
+        players,
+      })
+    ).toStrictEqual({
+      data: null,
+      pollTimer: null,
+      players,
     });
   });
 });

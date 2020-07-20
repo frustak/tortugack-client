@@ -5,11 +5,13 @@ import {
   GAME_LEAVE,
   GAME_START_POLLING,
   GAME_STOP_POLLING,
+  GAME_SET_PLAYERS,
 } from '../../constants/actionTypes';
 
 const INITIAL_STATE = {
   data: null,
   pollTimer: null,
+  players: [],
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -26,6 +28,8 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, pollTimer: action.timer };
     case GAME_STOP_POLLING:
       return { ...state, pollTimer: null };
+    case GAME_SET_PLAYERS:
+      return { ...state, players: action.players };
     default:
       return state;
   }
