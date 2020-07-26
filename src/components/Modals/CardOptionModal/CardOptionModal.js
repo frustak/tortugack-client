@@ -52,8 +52,8 @@ function CardOptionModal({ options, slug, doGameAction, hideModal }) {
 
 const mapStateToProps = state => {
   return {
-    options: state.game.data.gameStatus.lastAction.actionData.options,
-    slug: state.game.data.gameStatus.lastAction.actionData.eventCardSlug,
+    options: state.game.data.gameStatus.lastAction.actionData.eventCardOptions,
+    slug: state.game.data.gameStatus.lastAction.actionData.eventCard.slug,
   };
 };
 

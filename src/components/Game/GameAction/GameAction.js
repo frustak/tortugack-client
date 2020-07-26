@@ -72,12 +72,8 @@ function GameAction({ data, doGameAction, showModal }) {
         break;
       case 'USE-EVENT-CARD':
         icon = useEventIcon;
-        click = async () => {
-          await doGameAction('SEE-EVENT-CARD-OPTIONS', {
-            eventCardToSeeSlug: data.lastAction.actionData.eventCard.slug,
-          });
-          showModal(modalTypes.CARD_OPTION_MODAL);
-        };
+        click = () => showModal(modalTypes.CARD_OPTION_MODAL);
+
         break;
       case 'KEEP-EVENT-CARD':
         icon = keepEventIcon;
