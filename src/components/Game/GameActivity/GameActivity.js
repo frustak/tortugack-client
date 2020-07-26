@@ -1,4 +1,5 @@
 import React, { useRef, useEffect } from 'react';
+import _ from 'lodash';
 import { connect } from 'react-redux';
 
 import styles from './GameActivity.module.css';
@@ -12,6 +13,7 @@ function GameActivity({ activities }) {
   });
 
   const renderActivities = () => {
+    if (_.isEmpty(activities)) return <Activity text={'Nothing has happened yet!'} />;
     return activities.map((data, index) => <Activity key={index} text={data.text} />);
   };
 
