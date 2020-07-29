@@ -3,6 +3,9 @@ import { connect } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+import { FaGithub } from 'react-icons/fa';
+import Tooltip from '@material-ui/core/Tooltip';
+import IconButton from '@material-ui/core/IconButton';
 
 import { loginUser } from '../../actions/userActions/userActions';
 import styles from './LoginForm.module.css';
@@ -13,12 +16,29 @@ const useStyles = makeStyles({
     marginBottom: '8px',
   },
   howToPlayButton: {
-    marginTop: '8px',
     backgroundColor: '#4CAF50',
     color: 'white',
+    width: '100%',
     '&:hover': {
       backgroundColor: '#388E3C',
     },
+  },
+  anchor: {
+    marginTop: '8px',
+    marginBottom: '8px',
+  },
+  github: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    backgroundColor: 'rgba(255,255,255,0.1)',
+    borderRadius: '8px',
+  },
+  githubIcon: {
+    fontSize: '32px',
+    borderRadius: '50%',
+    cursor: 'pointer',
+    color: '#222222',
   },
 });
 
@@ -54,11 +74,38 @@ function LoginForm({ loginUser }) {
           href="https://drive.google.com/file/d/1ZGTgv-DnrvkOPpo4QPzqe13VMsWhH51b/view?usp=sharing"
           target="_blank"
           rel="noopener noreferrer"
+          className={classes.anchor}
         >
           <Button className={classes.howToPlayButton} variant="contained" color="default">
             Don't know how to play?
           </Button>
         </a>
+        <div className={classes.github}>
+          <Tooltip title="Client">
+            <a
+              href="https://github.com/Frostack/tortugack-client"
+              alt="api"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <IconButton>
+                <FaGithub className={classes.githubIcon} />
+              </IconButton>
+            </a>
+          </Tooltip>
+          <Tooltip title="API">
+            <a
+              href="https://github.com/Frostack/tortugack-client"
+              alt="api"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <IconButton>
+                <FaGithub className={classes.githubIcon} />
+              </IconButton>
+            </a>
+          </Tooltip>
+        </div>
       </form>
     </div>
   );
